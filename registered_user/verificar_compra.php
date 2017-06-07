@@ -9,16 +9,36 @@ if(isset($_POST['tarjeta']) && !empty($_POST['tarjeta']) && isset($_POST['cantid
 	$link = conectar();
 	$result=mysqli_query($link, "SELECT precio,cantidad FROM tienda WHERE id=$tiendaid");
 	$result=mysqli_fetch_array($result);
-	if (mysqli_query($link, "UPDATE credito SET credito.cantidad=credito.cantidad+'$cantidad * $result[cantidad]' WHERE credito.id_usuario='$_SESSION[id]'")){
-		mysqli_query ($link, "INSERT INTO compracredito (id_tienda,id_usuario,cantidad,precio,fecha) VALUES ('$_POST[pack]','$_SESSION[id]','$cantidad' * '$result[cantidad]','$cantidad' * '$result[precio]',CURDATE())");
-		mysqli_close($link);
-		header("location: ./comprar.php?error=0");
+	$result2=mysqli_query($link, "SELECT cantidad FROM credito WHERE id_usuario='$_SESSION[id]'");
+	$result2=mysqli_fetch_array($result2);
+	if ($result2['cantidad'] < 2147483647){
+		if ($result2['cantidad']+$cantidad > 2147483647){
+			$cantidad=$cantidad-$result2['cantidad'];
+			$exito=3;
+		}
+		else{
+			$exito=2;
+		}
+		if (mysqli_query($link, "UPDATE credito SET credito.cantidad=credito.cantidad+'$cantidad * $result[cantidad]' WHERE credito.id_usuario='$_SESSION[id]'")){
+			mysqli_query ($link, "INSERT INTO compracredito (id_tienda,id_usuario,cantidad,precio,fecha) VALUES ('$_POST[pack]','$_SESSION[id]','$cantidad' * '$result[cantidad]','$result[precio]',CURDATE())");
+			mysqli_close($link);
+			if ($exito == 3){
+				$precio=$cantidad*$result[precio];
+				header("location: ./comprar.php?error=".$exito."&cant=".$cantidad."&prec=".$precio);
+			}
+			else{
+				header("location: ./comprar.php?error=0");
+			}
+		}
+		else{
+			mysqli_close($link);
+			header("location: ./comprar.php?error=2");
+		}
 	}
-	else{
-		mysqli_close($link);
-		header("location: ./comprar.php?error=2");
+	else {
+		header("location: ./comprar.php?error=4&cant=0&prec=0");
 	}
 }
-else
-	header("location: ./comprar.php?error=1");
-?>
+	else
+		header("location: ./comprar.php?error=1");
+	?>

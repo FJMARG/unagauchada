@@ -7,7 +7,12 @@
 	include_once("../session/verifySession.php");
 	include_once("navbar.php");
 	?>
-	<link href="../style.html" rel="import" />
+		
+	<!-- -------------------------------------- Importa los CSS ---------------------------------------- -->
+	<link rel="stylesheet" href="/css/w3.css">
+	<link rel="stylesheet" href="/css/w3-theme-black.css">
+	<!-- ----------------------------------------------------------------------------------------------- -->
+	
 </head>
 <body>
 	<div class="w3-main" style="margin-left:350px">

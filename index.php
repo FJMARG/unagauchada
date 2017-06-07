@@ -3,7 +3,12 @@
 	<head> <!-- Cabecera -->
 		<title>Una Gauchada</title> <!-- Titulo de la pagina -->
 		<link rel="shortcut icon" type="image/x-icon" href="/image/icono_gauchada.ico"> <!-- Icono de la web -->
-		<link href="style.html" rel="import" /> <!-- Importa los CSS -->
+		
+		<!-- -------------------------------------- Importa los CSS ---------------------------------------- -->
+		<link rel="stylesheet" href="/css/w3.css">
+		<link rel="stylesheet" href="/css/w3-theme-black.css">
+		<!-- ----------------------------------------------------------------------------------------------- -->
+		
 	</head>
 	<body> <!-- Cuerpo -->
 		<section> <!-- Seccion -->

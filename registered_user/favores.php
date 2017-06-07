@@ -9,7 +9,12 @@
 	/* Navbar */
 	include_once("navbar.php");
 	?>
-	<link href="../style.html" rel="import" /> <!-- Importa los CSS -->
+		
+	<!-- -------------------------------------- Importa los CSS ---------------------------------------- -->
+	<link rel="stylesheet" href="/css/w3.css">
+	<link rel="stylesheet" href="/css/w3-theme-black.css">
+	<!-- ----------------------------------------------------------------------------------------------- -->
+
 </head>
 <body>
 	<div class="w3-main" style="margin-left:350px">
@@ -29,7 +34,7 @@
 						<?php
 							include_once ('../db/connect.php');
 							$link = conectar();
-							$result = mysqli_query($link, "SELECT * FROM favor WHERE (CURDATE() <= fechalimite) AND (activo = 1) ORDER BY fechalimite");
+							$result = mysqli_query($link, "SELECT * FROM favor WHERE (CURDATE() <= fechalimite) AND (activo = 1)");
 							mysqli_close($link);
 							include_once("mostrar_favores.php");
 						?>

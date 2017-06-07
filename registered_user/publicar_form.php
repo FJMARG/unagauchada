@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Una Gauchada - Publicar Favor</title> <!-- Titulo de la pagina -->+
+	<title>Una Gauchada - Publicar Favor</title> <!-- Titulo de la pagina -->
 	<link rel="shortcut icon" type="image/x-icon" href="../image/icono_gauchada.ico"> <!-- Icono de la web -->
 	<?php
 		/* Verifica estado de la sesion (si expiro). */
@@ -9,7 +9,12 @@
 		/* Navbar */
 		include_once("navbar.php");
 	?>
-	<link href="../style.html" rel="import" /> <!-- Importa los CSS -->
+		
+	<!-- -------------------------------------- Importa los CSS ---------------------------------------- -->
+	<link rel="stylesheet" href="/css/w3.css">
+	<link rel="stylesheet" href="/css/w3-theme-black.css">
+	<!-- ----------------------------------------------------------------------------------------------- -->
+	
 </head>
 <!-- Main -->
 <body>
@@ -46,23 +51,9 @@
 								mysqli_close($link);
 							?>		
 						</select>
-						<p>Descripcion:</p>
-						<textarea type="text" name="descripcion" id="descripcion" rows=4 cols=62 ></textarea>
-						<p>Fecha Limite:<input class="w3-input w3-round" type="date" name="fecha" id="fecha"></p>
-						<p>Localidad:<br><br>
-						<select class="w3-round" name="localidad" id="localidad">
-							<?php
-								include_once ("../db/connect.php");
-								$link = conectar();
-								$result = mysqli_query ($link, "SELECT * FROM localidades");
-								while ($row = mysqli_fetch_array($result)){ ?>
-								<option value="<?php echo $row["localidad"]; ?>"><?php echo $row["localidad"];?></option>
-							<?php
-							}
-								mysqli_free_result($result);
-								mysqli_close($link);
-							?>		
-						</select>
+						<p>Descripcion:<input class="w3-input w3-round" type="text" name="descripcion" id="descripcion"></p>
+						<p>Fecha Limite:<input class="w3-input w3-round" type="date" name="fecha" id="fecha" placeholder="AAAA-MM-DD"></p>
+						<p>Ciudad:<input class="w3-input w3-round" type="text" name="ciudad" id="ciudad"></p>
 						<p>Foto: <input class="w3-round" type="file" name="foto" id="foto"></p>
 						<p><button class="w3-btn w3-round">Publicar</button></p>
 					</form>

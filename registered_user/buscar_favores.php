@@ -7,7 +7,12 @@
 	include_once("../session/verifySession.php");
 	include_once("navbar.php");
 	?>
-	<link href="../style.html" rel="import" />
+			
+	<!-- -------------------------------------- Importa los CSS ---------------------------------------- -->
+	<link rel="stylesheet" href="../css/w3.css">
+	<link rel="stylesheet" href="../css/w3-theme-black.css">
+	<!-- ----------------------------------------------------------------------------------------------- -->
+	
 </head>
 <body>
 	<div class="w3-main" style="margin-left:350px">
@@ -29,12 +34,7 @@
 						include_once ('../db/connect.php');
 						$link = conectar();
 						$palabra = $_POST['palabra'];
-						$result = mysqli_query($link,
-							"SELECT * FROM favor 
-							WHERE titulo LIKE '%$palabra%' OR
-							ciudad LIKE '%$palabra%' OR
-							(SELECT nombre from categoria where categoria.id = favor.id_categoria) LIKE '%$palabra%'
-							AND CURDATE() <= fechalimite AND activo = 1"); 
+						$result = mysqli_query($link,"SELECT * FROM favor WHERE titulo LIKE '%$palabra%' AND CURDATE() <= fechalimite AND activo = 1"); 
 						mysqli_close($link);
 						include_once("mostrar_favores.php");
 						}else{
