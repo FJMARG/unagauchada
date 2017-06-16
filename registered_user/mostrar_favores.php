@@ -2,11 +2,11 @@
 $index = 0;
 if (mysqli_num_rows($result)!=0){
 while ($array = mysqli_fetch_array($result)){?>
-	<div class="w3-panel w3-round w3-card w3-grey">
+	<div class="w3-panel w3-border w3-border-orange w3-round-large">
 		<font size=4 face="arial">
 			<center>
 				<h2> <?php echo $array['titulo']; ?></h3>
-				<img src='/image/favor/<?php echo "$array[foto]"; ?>' width="300" height="300"/>
+				<img class="w3-round" src='/image/favor/<?php echo "$array[foto]"; ?>' width="300" height="300"/>
 				<br>
 				<br>
 			</center>
@@ -34,21 +34,22 @@ while ($array = mysqli_fetch_array($result)){?>
 				<br>
 				Ciudad :&nbsp;&nbsp;<?php echo $array['ciudad']; ?>
 				<br>
-				<?php 
-				if($_SESSION['id'] == $array['id_usuario'] )
-				{?>
 				<br>
-				<a href="ver_mis_favores.php" class="w3-btn w3-round">Mis Favores.</a>
-				</center>
-				<?php 
-				}?>
-			<br>
+				<?php if($array['id_usuario'] != $_SESSION['id']){ ?>
+				<a href="preguntas.php?id=<?php echo $array['id']; ?>" class="w3-btn w3-round"> Hacer Pregunta.</a>
+				<br>
+				<br>
+				<?php }else{ ?>
+				<a href="preguntas.php?id=<?php echo $array['id']; ?>" class="w3-btn w3-round"> Ver Preguntas.</a>
+				<br>
+				<br>
+				<?php } ?>
 			</div>
 			<center>
 			<a href="#" onclick="verDetalles(<?php echo $index; ?>,event)" class="w3-btn w3-round" id="link<?php echo $index; ?>">Mostrar m&aacute;s.
-			</a><br>
+			</a></center>
 		</font><br>
-	</div>
+	</div><br>
 <?php
 	$index = $index + 1;
 }

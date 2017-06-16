@@ -23,16 +23,12 @@
 						if (isset ($_GET['error']) and ($_GET['error'] == "1"))
 							echo "<font color='red'> No tienes los suficientes creditos para publicar un favor. </font>";
 					?>
-					<h1 class="w3-text-teal">Favores</h1>
-					<center><form method="POST" action="buscar_favores.php"> 
-					Palabra clave: <input class="w3-round" type="text" name="palabra" size="20"><br><br> 
-					<button class="w3-btn w3-round">Buscar</button>
-					</form></center>
+					<center><h1 class="w3-theme-black">Mis Favores</h1><br></center>
 					<div class="w3-row-padding">
 					<?php
 						include_once ('../db/connect.php');
 						$link = conectar();
-						$result = mysqli_query($link,"SELECT * FROM favor WHERE id_usuario = '$_SESSION[id]'"); 
+						$result = mysqli_query($link,"SELECT * FROM favor WHERE id_usuario = '$_SESSION[id]' and (CURDATE() <= fechalimite) ORDER BY fechalimite"); 
 						mysqli_close($link);
 						include_once("mostrar_favores.php");
 					?>

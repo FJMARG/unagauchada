@@ -1,7 +1,7 @@
 /* Esta funcion verifica si los campos estan vacios.  || (document.getElementById("foto").value.length == 0) en la condicion del if para incluir la validacion de la foto. */
 
-function validar (){
-	"use strict";
+function validar (creditos){
+
 	if ((document.getElementById("titulo").value.length === 0) || (document.getElementById("categoria").value.length === 0) || (document.getElementById("descripcion").value.length === 0) || (document.getElementById("fecha").value.length === 0) || (document.getElementById("ciudad").value.length === 0)){
 		alert('No puede haber campos vacios.');
 		return false;
@@ -36,5 +36,11 @@ function validar (){
 			alert ('El formato de fecha no es valido. Formato: AAAA-MM-DD.');
 			return false;
 		}
+		var numero = creditos;
+		if (numero === 0){
+			alert ('No tienes creditos para publicar el favor.');
+			return false;
+	}
+	
 	}
 }

@@ -25,8 +25,8 @@
 						if (isset ($_GET['id']) and ($_GET['id'] == "incorrecto"))
 							echo "<font color='red'> No se ingreso ninguna referencia. </font>"
 					?>
-					<h1 class="w3-text-teal">Favores</h1>
-					<center><form method="POST" action="buscar_favores.php"> 
+					<center><h1 class="w3-theme-black">Favores</h1><br>
+					<form method="POST" action="buscar_favores.php"> 
 					Palabra clave: <input class="w3-round" type="text" name="palabra" size="20"><br><br> 
 					<button class="w3-btn w3-round">Buscar</button>
 					</form></center>
@@ -34,7 +34,7 @@
 						<?php
 							include_once ('../db/connect.php');
 							$link = conectar();
-							$result = mysqli_query($link, "SELECT * FROM favor WHERE (CURDATE() <= fechalimite) AND (activo = 1)");
+							$result = mysqli_query($link, "SELECT * FROM favor WHERE (CURDATE() <= fechalimite) AND (activo = 1) ORDER BY fechalimite");
 							mysqli_close($link);
 							include_once("mostrar_favores.php");
 						?>

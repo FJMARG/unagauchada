@@ -22,7 +22,7 @@
 <div class="w3-main" style="margin-right:450px; margin-left:450px">
 	<div class="w3-padding-64">
     	<div class="w3-container"> 
-			<h1 class="w3-text-teal">Comprar creditos</h1>
+			<h1 class="w3-theme-black">Comprar creditos</h1>
 			<?php 
         	if (isset ($_GET['error']))
 				if ($_GET['error']=="2")
@@ -41,7 +41,7 @@
 							}
         	?>
 			<script language= "javascript" src="../js/validarYCalcularCamposCompra.js"></script>
-			<form class="w3-form w3-round-large w3-grey " method="post" action="./verificar_compra.php" onsubmit="return validar()">
+			<form class="w3-form w3-panel w3-border w3-border-orange w3-round-large" method="post" action="./verificar_compra.php" onsubmit="return validar()">
 			<p><label>Item: </label><select name="pack" id="pack" oninput="calcular()">
 			<?php
 				$link = conectar();

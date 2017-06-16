@@ -11,21 +11,18 @@
 		
 </head>
 <body>
-	<br>
-	<center>
-		<font size="6" face="lucida handwriting">Una Gauchada</font>
-	</center>
-	<div class="w3-main" style="margin-left:350px">
+	<div style="margin-left:350px">
 		<div style="margin-right:350px">
 			<div class="w3-row w3-padding-64">
-				<div class="w3-container">
+				<div class="w3-container ">
+					<center><img src="/image/Logo.png">
+					<h1 class="w3-theme-black">Registro</h1></center><br>
 					<?php
 						if ((isset($_GET['error'])) and ($_GET['error']=1))
 							echo "<font color='red'> El Email ingresado se encuentra en uso.</font>";
 					?>
 					<script language= "javascript" src="../js/validarCamposRegistro.js"></script>
-					<form class="w3-form" method="post" action="./signup.php" onsubmit="return validar()">
-						<h3>Registro</h3>
+					<form class="w3-form w3-panel w3-border w3-border-orange w3-round-large" method="post" action="./signup.php" onsubmit="return validar()">
 						<br>
 						<p>Fecha de nacimiento: <input type="date" name="fecha_nac" id="fecha_nac"></p>
 						<p><input class="w3-input" type="text" name="nombre" id="nombre" placeholder="Nombre"></p>
@@ -34,9 +31,9 @@
 						<p><input class="w3-input" type="email" name="email" id="email" placeholder="Email"></p>
 						<p><input class="w3-input" type="password" name="pw" id="pw" placeholder="Contraseña"></p>
 						<p><input class="w3-input" type="password" name="cpw" id="cpw" placeholder="Confirmar Contraseña"></p>
-						<button class="w3-btn">Registrar</button>
+						<center><button class="w3-btn w3-round" >Registrar</button></center>
 					</form>
-					<button class="w3-btn" onclick = "location='../index.php'">Volver a Inicio</button>
+					<center><button class="w3-btn w3-round" onclick = "location='../index.php'">Volver a Inicio</button></center>
 				</div>
 			</div>
 		</div>
