@@ -28,13 +28,20 @@
 						mysqli_close($link);
 						$array = mysqli_fetch_array($result)
 					?>
-					<center><h1 class="w3-theme-black">Favores</h1><br>
-					</form></center>
+					<center>
 					<div class="w3-row-padding">
-						<?php
-							echo $array['titulo'];
-						?>
+						<font size=4 face="arial">
+							<?php
+								include_once("datos.php");
+							?>
+						<script language= "javascript" src="../js/validarPregunta.js"></script>
+						<h3> Descripcion: <h3>
+							<form class="w3-form w3-panel w3-round-large" method="post" onsubmit="return validarPregunta();" action="./postular.php" enctype="multipart/form-data" >
+							<textarea class="w3-round" type="text" name="pregunta" id="pregunta" cols="50" rows="5"></textarea>
+							<br><br>
+							<p><button class="w3-btn w3-round">Postularse</button></p>
 					</div>
+					</center>
 				</div>
 			</div>
 		</div>

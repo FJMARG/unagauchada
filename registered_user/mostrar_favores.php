@@ -19,7 +19,9 @@ while ($array = mysqli_fetch_array($result)){?>
 					$link1 = conectar();
 					$result2 = mysqli_query ($link1, "SELECT * FROM usuario WHERE id = '$array[id_usuario]'");
 					$arreglo = mysqli_fetch_array($result2);
-        			echo $arreglo['nombre']." ".$arreglo['apellido'];
+				?>
+				<a href="ver_perfil.php?id=<?php echo $array['id_usuario']?>"><?php echo $arreglo['nombre']." ".$arreglo['apellido'];?> </a>
+				<?php
 					/* Categoria: */
 					$result2 = mysqli_query ($link1, "SELECT * FROM categoria WHERE id = '$array[id_categoria]'");
 					$arreglo = mysqli_fetch_array($result2);
@@ -35,11 +37,17 @@ while ($array = mysqli_fetch_array($result)){?>
 				Ciudad :&nbsp;&nbsp;<?php echo $array['ciudad']; ?>
 				<br>
 				<br>
+				<!-- BOTON PARA HACER PREGUNTAS -->
 				<?php if($array['id_usuario'] != $_SESSION['id']){ ?>
 				<a href="preguntas.php?id=<?php echo $array['id']; ?>" class="w3-btn w3-round"> Hacer Pregunta.</a>
 				<br>
 				<br>
-				<?php }else{ ?>
+				<!-- BOTON PARA POSTULARSE -->
+				<a href="postularse.php?id=<?php echo $array['id']; ?>" class="w3-btn w3-round"> Postularse.</a>
+				<br>
+				<br>
+				<!-- BOTON PARA VER PREGUNTAS -->
+				<?php } else{ ?>
 				<a href="preguntas.php?id=<?php echo $array['id']; ?>" class="w3-btn w3-round"> Ver Preguntas.</a>
 				<br>
 				<br>

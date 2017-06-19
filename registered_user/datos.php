@@ -19,4 +19,23 @@
 				echo "<center><font color='red'> Debe rellenar el campo de pregunta. </font></center>";
 			}
 		}
-	?>
+?>
+<div class="w3-panel w3-border w3-border-orange w3-round-large">
+<h2> <?php echo $favor['titulo']; ?></h2>
+<img class="w3-round" src='/image/favor/<?php echo "$favor[foto]"; ?>' width="300" height="300"/>
+<br>
+<br>
+Dueño : &nbsp;&nbsp; 
+<?php echo $dueño['nombre']." ".$dueño['apellido']; ?>
+<br>
+Categoria:&nbsp;&nbsp; <?php echo $categoria['nombre']; ?>
+<br>
+Fecha Limite :&nbsp;&nbsp; <?php echo $favor['fechalimite']; ?>
+<br>
+Descripcion :&nbsp;&nbsp;
+<font size="3"><i><?php echo $favor['descripcion']; ?></i></font>
+<br>
+Ciudad :&nbsp;&nbsp;<?php echo $favor['ciudad']; ?>
+<br>
+<br>
+</div>

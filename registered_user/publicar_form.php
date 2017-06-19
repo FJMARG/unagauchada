@@ -80,5 +80,10 @@
 			</div>
 		</div>
 	</div>
+	<div id="footer" class="w3-grey">
+		<br>
+		<center><font  size="3">GSoft Web Designer &copy;</font><center>
+		<br>
+	</div>
 </body>
 </html>
