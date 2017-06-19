@@ -22,8 +22,11 @@
 			<div class="w3-padding-64">
 				<div class="w3-container">
 					<?php
-						if (isset ($_GET['id']) and ($_GET['id'] == "incorrecto"))
-							echo "<font color='red'> No se ingreso ninguna referencia. </font>"
+						if (isset ($_GET['id']) and ($_GET['id'] == "incorrecto")){
+							echo "<font color='red'><center> No se ingreso ninguna referencia. </center></font>";
+						}else if(isset ($_GET['id']) and ($_GET['id'] == "correcto")){
+								echo "<font color='green'><center> Te postulaste correctamente. </center></font>";
+						}
 					?>
 					<center><h1 class="w3-theme-black">Favores</h1><br>
 					<form method="POST" action="buscar_favores.php"> 
@@ -42,6 +45,11 @@
 				</div>
 			</div>
 		</div>
+	</div>
+	<div id="footer" class="w3-grey">
+		<br>
+		<center><font  size="3">GSoft Web Designer &copy;</font><center>
+		<br>
 	</div>
 </body>
 </html>

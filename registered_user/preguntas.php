@@ -20,34 +20,16 @@
 	<div class="w3-main" style="margin-left:350px">
 		<div style="margin-right:350px">
 			<div class="w3-padding-64">
-				<div class="w3-panel w3-border w3-border-orange w3-round-large">
 					<div class="w3-row-padding ">
 						<font size=4 face="arial">
 							<center>
 								<?php include_once('datos.php'); ?> 
-								<h2> <?php echo $favor['titulo']; ?></h2>
-								<img class="w3-round" src='/image/favor/<?php echo "$favor[foto]"; ?>' width="300" height="300"/>
-								<br>
-								<br>
-								Dueño : &nbsp;&nbsp; 
-								<?php echo $dueño['nombre']." ".$dueño['apellido']; ?>
-								<br>
-								Categoria:&nbsp;&nbsp; <?php echo $categoria['nombre']; ?>
-								<br>
-								Fecha Limite :&nbsp;&nbsp; <?php echo $favor['fechalimite']; ?>
-								<br>
-								Descripcion :&nbsp;&nbsp;
-								<font size="3"><i><?php echo $favor['descripcion']; ?></i></font>
-								<br>
-								Ciudad :&nbsp;&nbsp;<?php echo $favor['ciudad']; ?>
-								<br>
-								<br>
 							</center>
 						</div>
 					</div>
-				</div>
 				<script language= "javascript" src="../js/validarPregunta.js"></script>
 				<center>
+					<!-- Se muestra un mensaje de error si no hay preguntas en ese favor , si las hay las muestra debajo del h1 de preguntas.-->
 					<h1>Preguntas</h1><br><br>
 					<?php
 						if(mysqli_num_rows($result2) == 0) {
@@ -58,12 +40,13 @@
 								<?php include('ver_preguntas.php');
 							}
 						}
+						/*En este if se pregunta si el usuario de la sesion iniciada es el propio dueño del favor, en caso de no serlo puede realizar una pregunta.*/
 						if($favor['id_usuario'] != $_SESSION['id']){ ?>
 							<h3> Realizar Pregunta: <h3>
-							<form class="w3-form w3-panel w3-round-large" method="post" action="./preguntar.php" enctype="multipart/form-data" >
+							<form class="w3-form w3-panel w3-round-large" method="post" onsubmit="return validarPregunta();" action="./preguntar.php" enctype="multipart/form-data" >
 							<textarea class="w3-round" type="text" name="pregunta" id="pregunta" cols="55" rows="5"></textarea>
 							<br><br>
-							<p><button class="w3-btn w3-round" onclick="validarPregunta();"">Preguntar</button></p>
+							<p><button class="w3-btn w3-round">Preguntar</button></p>
 						<?php 
 						}
 						?>

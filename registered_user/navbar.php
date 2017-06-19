@@ -16,7 +16,7 @@
       <?php
         echo $array2['cantidad']."</center>";
       ?></a>
-  <a href="#" class="w3-bar-item w3-light-orange w3-button">Ver Mi Perfil</a>
+  <a href="ver_perfil.php?id=<?php echo $_SESSION['id']?>" class="w3-bar-item w3-light-orange w3-button">Ver Mi Perfil</a>
   <a href="ver_mis_favores.php" class="w3-bar-item w3-light-orange w3-button">Ver Mis Favores</a>
   <a href="#" class="w3-bar-item w3-light-orange w3-button">Modificar Perfil</a>
   <a href="#" class="w3-bar-item w3-light-orange w3-button">Ver Postulantes</a>
