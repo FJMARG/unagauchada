@@ -13,4 +13,38 @@ function validar (){
 		alert('La contrase\u00F1a debe tener minimo una longitud de 6.');
 		return false;
 	}
+	var fec = document.getElementById("fecha_nac").value;
+	var fecha = fec.split("-");
+	if (fecha.length !== 3){
+		alert ('El formato de fecha no es valido. Formato: AAAA-MM-DD.');
+		return false;
+	}
+	var dia = fecha[2];
+	var mes = fecha[1];
+	if (mes<=10){
+		mes = mes - 1;
+		mes = "0"+String(mes);
+	}
+	else{
+		mes = mes-1;
+		mes = String(mes);
+	}
+	var ano = fecha[0];
+	var fa = new Date();
+	if ((dia.length === 2) && (dia <= 31) && (dia > 0) && (mes <= 11) && (mes.length === 2) && (mes >= 0) && (ano.length === 4) && (ano > 0)){
+		var f = new Date (ano,mes,dia);
+		if (f > fa){
+			alert ('La fecha debe ser menor a la actual.');
+			return false;
+		}
+	}
+	else {
+		alert ('El formato de fecha no es valido. Formato: AAAA-MM-DD.');
+		return false;
+	}
+	var res=document.getElementById("rta").innerText;
+	if (res === "E-mail no disponible." || res.length === 0){
+		alert ("El E-mail no permitido o no disponible.");
+		return false;
+	}
 }

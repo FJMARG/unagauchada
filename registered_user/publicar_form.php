@@ -34,13 +34,14 @@
 									if ($_GET['error'] == 2)
 										echo "<font color='red'> Ocurrio un error al procesar tu solicitud.</font>";
 					?>
+					<script language= "javascript" src="../js/jquery-3.2.1.js"></script>
 					<script language= "javascript" src="../js/validarCamposFavor.js"></script>
-					<?php 
+					<?php /*
 						$link = conectar();
 						$result = mysqli_query($link, "SELECT cantidad FROM credito WHERE id_usuario='$_SESSION[id]'");
-						$array = mysqli_fetch_array($result);
+						$array = mysqli_fetch_array($result); */
 					?>
-					<form class="w3-form w3-panel w3-border w3-border-orange w3-round-large" method="post" enctype="multipart/form-data" action="./publicar.php" onsubmit="return validar(<?php echo $array['cantidad']; ?>)">
+					<form class="w3-form w3-panel w3-border w3-border-orange w3-round-large" method="post" enctype="multipart/form-data" action="./publicar.php" onsubmit="validar(event,<?php echo $_SESSION['id'];?>);">
 						<p>Titulo:<input class="w3-input w3-round" type="text" name="titulo" id="titulo"></p>
 						<p>Categorias:<br><br>
 						<select class="w3-round" name="categoria" id="categoria">
@@ -60,7 +61,7 @@
 						<textarea class="w3-round" type="text" name="descripcion" id="descripcion" cols="50" rows="5"></textarea>
 						<p>Fecha Limite:<input class="w3-input w3-round" type="date" name="fecha" id="fecha" placeholder="AAAA-MM-DD"></p>
 						<p>Localidad:<br><br>
-						<select class="w3-round" name="ciudad" id="ciudad">
+						<select class="w3-round" name="loc" id="loc">
 							<?php
 								include_once ("../db/connect.php");
 								$link = conectar();

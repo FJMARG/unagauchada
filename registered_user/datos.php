@@ -35,7 +35,7 @@ Fecha Limite :&nbsp;&nbsp; <?php echo $favor['fechalimite']; ?>
 Descripcion :&nbsp;&nbsp;
 <font size="3"><i><?php echo $favor['descripcion']; ?></i></font>
 <br>
-Ciudad :&nbsp;&nbsp;<?php echo $favor['ciudad']; ?>
+Localidad :&nbsp;&nbsp;<?php echo $favor['ciudad']; ?>
 <br>
 <br>
 </div>
