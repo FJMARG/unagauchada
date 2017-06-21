@@ -34,7 +34,7 @@ while ($array = mysqli_fetch_array($result)){?>
 				Descripcion :&nbsp;&nbsp;
 				<font size="3"><i><?php echo $array['descripcion']; ?></i></font>
 				<br>
-				Ciudad :&nbsp;&nbsp;<?php echo $array['ciudad']; ?>
+				Localidad :&nbsp;&nbsp;<?php echo $array['ciudad']; ?>
 				<br>
 				<br>
 				<!-- BOTON PARA HACER PREGUNTAS -->

@@ -2,6 +2,7 @@
 	include_once ("../session/verifySession.php");
 	include_once ("../db/connect.php");
 	include_once("./verificar_creditos.php");
+	/* Localidad en la base de datos es ciudad. */
 	if (tieneCreditos()){
 		$link = conectar();	
 		if (mysqli_query($link, "UPDATE credito SET cantidad = cantidad - 1 WHERE id_usuario='$_SESSION[id]'")){
@@ -15,10 +16,10 @@
 				$fechayhora=date("d-m-Y_H,i,s");	/* Almacena la hora en el formato indicado. */
 				$nombretipoimg=$fechayhora.".".$extension; /* Concateno la fecha con la extension del archivo (Este sera el nombre del archivo). */
 				rename($ruta , "../image/favor/".$nombretipoimg); /* Renombro el archivo por el nombre indicado arriba. */
-				mysqli_query($link, "INSERT INTO favor (titulo,descripcion,fechalimite,ciudad,id_usuario,id_categoria,activo,foto) VALUES ('$_POST[titulo]','$_POST[descripcion]','$_POST[fecha]','$_POST[ciudad]','$_SESSION[id]','$_POST[categoria]',1,'$nombretipoimg')");
+				mysqli_query($link, "INSERT INTO favor (titulo,descripcion,fechalimite,ciudad,id_usuario,id_categoria,activo,foto) VALUES ('$_POST[titulo]','$_POST[descripcion]','$_POST[fecha]','$_POST[loc]','$_SESSION[id]','$_POST[categoria]',1,'$nombretipoimg')");
 			}
 			else {
-				mysqli_query($link, "INSERT INTO favor (titulo,descripcion,fechalimite,ciudad,id_usuario,id_categoria,activo,foto) VALUES ('$_POST[titulo]','$_POST[descripcion]','$_POST[fecha]','$_POST[ciudad]','$_SESSION[id]','$_POST[categoria]',1,'default.png')");
+				mysqli_query($link, "INSERT INTO favor (titulo,descripcion,fechalimite,ciudad,id_usuario,id_categoria,activo,foto) VALUES ('$_POST[titulo]','$_POST[descripcion]','$_POST[fecha]','$_POST[loc]','$_SESSION[id]','$_POST[categoria]',1,'default.png')");
 			}
 			mysqli_close($link);
 			header("location: ./publicar_form.php?error=0");
