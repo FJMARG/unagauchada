@@ -7,8 +7,8 @@
 	?>
 	<a href="ver_perfil.php?id=<?php echo $_SESSION['id']?>" class="w3-bar-item w3-light-orange w3-button">Ver Mi Perfil</a>
 	<a href="ver_mis_favores.php" class="w3-bar-item w3-light-orange w3-button">Ver Mis Favores</a>
-	<a href="#" class="w3-bar-item w3-light-orange w3-button">Modificar Perfil</a>
-	<a href="#" class="w3-bar-item w3-light-orange w3-button">Ver Postulantes</a>
+	<a href="modificar_perfil.php" class="w3-bar-item w3-light-orange w3-button">Modificar Perfil</a>
+	<a href="ver_postulantes.php" class="w3-bar-item w3-light-orange w3-button">Ver Postulantes</a>
 	<a href="../session/logout.php" class="w3-bar-item w3-light-orange w3-button">Cerrar Sesi&oacute;n</a>
 </div>
 <div class="w3-main" id="main">

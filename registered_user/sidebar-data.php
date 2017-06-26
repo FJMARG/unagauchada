@@ -8,8 +8,8 @@
 			$link = conectar();
 			$result = mysqli_query ($link, "SELECT * FROM usuario WHERE id = '$_SESSION[id]'");
 			$array = mysqli_fetch_array($result);
-			/*$result2 = mysqli_query ($link, "SELECT * FROM credito WHERE id_usuario = '$array[id]'");
-			$array2= mysqli_fetch_array($result2);*/
+			$result2 = mysqli_query ($link, "SELECT * FROM credito WHERE id_usuario = '$array[id]'");
+			$array2= mysqli_fetch_array($result2);
 			echo $array['nombre']." ".$array['apellido'];
 		?>
 	</center>

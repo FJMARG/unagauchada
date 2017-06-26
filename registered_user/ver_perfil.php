@@ -19,21 +19,33 @@
 		<div class="w3-padding-64">
 			<div class="w3-container" style="margin-left:350px">
 				<div style="margin-right:350px">
+					<p><center><h1>Perfil de usuario</h1></center></p>
+					<div class="w3-panel w3-border w3-border-orange w3-round-large">
 						<?php
 							include_once ('../db/connect.php');
 							$link = conectar();
 							$user = mysqli_query($link ,"SELECT * from usuario where usuario.id = '$_GET[id]'");
 							$datos = mysqli_fetch_array($user);
+							$creditos= mysqli_query ($link, "SELECT * FROM credito WHERE credito.id_usuario = '$_GET[id]'");
+							$datos2= mysqli_fetch_array($creditos);
 							mysqli_close($link);
 						?>
-						<img align="right" class="w3-round" src='/image/favor/<?php echo "$datos[foto]"; ?>' width="300" height="300"/>
-						<br><br>
 						<center>
-						<p align="center"><h3><?php echo $datos['nombre']." ".$datos['apellido']; ?></h3></p>
-						<p align="center"><h3><?php echo $datos['email']; ?></h3></p>
-						<p align="center"><h3><?php echo $datos['fecnac']; ?></h3></p>
-						<p align="center"><h3><?php echo $datos['tel']; ?></h3></p>
+						<br><br>
+						<img class="w3-round" src='/image/favor/<?php echo "$datos[foto]"; ?>' width="300" height="300"/>
+						<br><br>
+						<p><h3><strong>Nombre: </strong><i><?php echo $datos['nombre']." ".$datos['apellido']; ?></i></h3></p>
+						<p><h3><strong>Email: </strong><i><?php echo $datos['email']; ?></i></h3></p>
+						<p><h3><strong>Fecha De Nacimiento: </strong><i><?php echo $datos['fecnac']; ?></i></h3></p>
+						<p><h3><strong>Telefono: </strong><i><?php echo $datos['tel']; ?></i></h3></p>
+						<p><h3><strong>Creditos: </strong><i><?php echo $datos2['cantidad']; ?></i></h3></p>
+						<p><h3><strong>Rango: </strong><i>
+						<?php 
+							include_once("calcular_rango.php");
+						?>
+						</i></h3></p>
 						</center>
+					</div>
 				</div>
 			</div>
 		</div>	

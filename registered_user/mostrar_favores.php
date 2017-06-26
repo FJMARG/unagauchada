@@ -27,7 +27,7 @@ while ($array = mysqli_fetch_array($result)){?>
 					$arreglo = mysqli_fetch_array($result2);
       			?>
 				<br>
-				Categoria:&nbsp;&nbsp; <?php echo $arreglo['nombre']; mysqli_close($link1); ?>
+				Categoria:&nbsp;&nbsp; <?php echo $arreglo['nombre']; ?>
 				<br>
 				Fecha Limite :&nbsp;&nbsp; <?php echo $array['fechalimite']; ?>
 				<br>
@@ -43,11 +43,15 @@ while ($array = mysqli_fetch_array($result)){?>
 				<br>
 				<br>
 				<!-- BOTON PARA POSTULARSE -->
-				<a href="postularse.php?id=<?php echo $array['id']; ?>" class="w3-btn w3-round"> Postularse.</a>
-				<br>
-				<br>
+				<?php
+					$resultado = mysqli_query($link1 ,"SELECT * FROM postula Where (postula.id_usuario = '$_SESSION[id]')AND (postula.id_favor = '$array[id]')");
+					mysqli_close($link1);
+					if (mysqli_num_rows($resultado)==0){ ?>
+						<a href="postularse.php?id=<?php echo $array['id']; ?>" class="w3-btn w3-round"> Postularse.</a>
+						<br>
+						<br>
 				<!-- BOTON PARA VER PREGUNTAS -->
-				<?php } else{ ?>
+				<?php }} else{ ?>
 				<a href="preguntas.php?id=<?php echo $array['id']; ?>" class="w3-btn w3-round"> Ver Preguntas.</a>
 				<br>
 				<br>

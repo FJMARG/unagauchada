@@ -14,10 +14,10 @@
 		mysqli_close($link);
 		if (isset ($_GET['error']) and ($_GET['error'] == "correcto")){
 			echo "<center><font color='green'> Pregunta realizada. </font></center>";
-		}else{
-			if (isset ($_GET['error']) and ($_GET['error'] == "incorrecto")){
-				echo "<center><font color='red'> Debe rellenar el campo de pregunta. </font></center>";
-			}
+		}elseif (isset ($_GET['error']) and ($_GET['error'] == "incorrecto")){
+			echo "<center><font color='red'> Debe rellenar el campo de pregunta. </font></center>";
+		}elseif (isset ($_GET['error']) and ($_GET['error'] == "correcto2")){
+			echo "<center><font color='green'> Respuesta realizada. </font></center>";
 		}
 ?>
 <div class="w3-panel w3-border w3-border-orange w3-round-large">
