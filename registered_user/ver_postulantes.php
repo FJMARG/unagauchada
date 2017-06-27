@@ -38,18 +38,20 @@
 					<?php
 						include_once ('../db/connect.php');
 						$link = conectar();
-						$result = mysqli_query($link,"SELECT favor.titulo, favor.id AS idfavor FROM favor INNER JOIN postula ON (postula.id_favor = favor.id) WHERE favor.id_usuario = '$_SESSION[id]' AND postula.elegido = 0 AND CURDATE() <= fechalimite AND activo = 1 ORDER BY favor.titulo");
+						$consulta = "SELECT favor.titulo, favor.id AS idfavor, usuario.nombre, usuario.apellido, usuario.puntaje, usuario.id AS idusuario, postula.id AS idpostula FROM usuario INNER JOIN postula ON (usuario.id = postula.id_usuario) INNER JOIN favor ON (postula.id_favor = favor.id) WHERE favor.id_usuario = '$_SESSION[id]' AND postula.elegido = 0 AND CURDATE() <= fechalimite AND activo = 1 ORDER BY favor.titulo";
+						$result = mysqli_query($link,$consulta);
+						$titulo = "|/|\|/|\|/|\|/|"; /* String inusual para titulo de favor */
 						while ($array = mysqli_fetch_array($result)){
-							$result2 = mysqli_query ($link,"SELECT usuario.nombre, usuario.apellido, usuario.puntaje, usuario.id AS idusuario, postula.id AS idpostula FROM postula INNER JOIN usuario ON (postula.id_usuario = usuario.id) WHERE id_favor = '$array[idfavor]'");
-							echo ("<p>Titulo del Favor: ".$array['titulo']."</p>");
-							while ($array2 = mysqli_fetch_array($result2)){
-								echo ("<a>Nombre y apellido del postulante: </a>");
-								echo ("<a href='./ver_perfil.php?id=".$array2['idusuario']."'>".$array2['nombre']." ".$array2['apellido']."</a>");
-								echo ("<p>Puntaje: ".$array2['puntaje']."</p>"); ?>
-								<p><button class="w3-btn w3-round" name="elegir" value="<?php echo ($array2['idpostula']."/".$array['idfavor']); ?>">Elegir postulante</button></p>
-								<?php
+							if ($titulo != $array ['titulo']){	/* Condicion para que no repita el titulo del favor. */
+								$titulo = $array ['titulo'];
+								echo ("<p>Titulo del Favor: ".$titulo."</p>");
 							}
-						}		?>
+							echo ("<a>Nombre y apellido del postulante: </a>");
+							echo ("<a href='./ver_perfil.php?id=".$array['idusuario']."'>".$array['nombre']." ".$array['apellido']."</a>");
+							echo ("<p>Puntaje: ".$array['puntaje']."</p>"); ?>
+							<p><button class="w3-btn w3-round" name="elegir" value="<?php echo ($array['idpostula']."/".$array['idfavor']); ?>">Elegir postulante</button></p>
+							<?php
+						}	?>
 						</form>
 					<?php
 						mysqli_close($link);
