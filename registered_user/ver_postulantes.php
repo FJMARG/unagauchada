@@ -38,22 +38,41 @@
 					<?php
 						include_once ('../db/connect.php');
 						$link = conectar();
-						$consulta = "SELECT favor.titulo, favor.id AS idfavor, usuario.nombre, usuario.apellido, usuario.puntaje, usuario.id AS idusuario, postula.id AS idpostula FROM usuario INNER JOIN postula ON (usuario.id = postula.id_usuario) INNER JOIN favor ON (postula.id_favor = favor.id) WHERE favor.id_usuario = '$_SESSION[id]' AND postula.elegido = 0 AND CURDATE() <= fechalimite AND activo = 1 ORDER BY favor.titulo";
+						$consulta = "SELECT favor.titulo, favor.id AS idfavor, usuario.nombre, usuario.apellido, usuario.puntaje, usuario.id AS idusuario, postula.id AS idpostula, postula.descripcion FROM usuario INNER JOIN postula ON (usuario.id = postula.id_usuario) INNER JOIN favor ON (postula.id_favor = favor.id) WHERE favor.id_usuario = '$_SESSION[id]' AND postula.elegido = 0 AND CURDATE() <= fechalimite AND activo = 1 ORDER BY favor.titulo";
 						$result = mysqli_query($link,$consulta);
-						$titulo = "|/|\|/|\|/|\|/|"; /* String inusual para titulo de favor */
-						while ($array = mysqli_fetch_array($result)){
-							if ($titulo != $array ['titulo']){	/* Condicion para que no repita el titulo del favor. */
-								$titulo = $array ['titulo'];
-								echo ("<p>Titulo del Favor: ".$titulo."</p>");
-							}
-							echo ("<a>Nombre y apellido del postulante: </a>");
-							echo ("<a href='./ver_perfil.php?id=".$array['idusuario']."'>".$array['nombre']." ".$array['apellido']."</a>");
-							echo ("<p>Puntaje: ".$array['puntaje']."</p>"); ?>
-							<p><button class="w3-btn w3-round" name="elegir" value="<?php echo ($array['idpostula']."/".$array['idfavor']); ?>">Elegir postulante</button></p>
+						if(mysqli_num_rows($result) != 0){
+							$titulo = "|/|\|/|\|/|\|/|"; /* String inusual para titulo de favor */
+							$first = 0; /* Variable para corregir el div del formulario. */
+							?>
+							<div class="w3-panel w3-border w3-border-orange w3-round-large">
 							<?php
-						}	?>
-						</form>
+							
+							while ($array = mysqli_fetch_array($result)){ 
+								if ($titulo != $array ['titulo']){	/* Condicion para que no repita el titulo del favor. */
+									if ($first == 1){ /* Condicion y variable para corregir el div del formulario. */
+										echo "</div>";
+										echo "<div class='w3-panel w3-border w3-border-orange w3-round-large'>";
+									} else {
+										$first = 1;
+									}
+									$titulo = $array ['titulo'];
+									echo ("<p>Titulo del Favor: ".$titulo."</p>");
+								}
+								echo ("<a>Nombre y apellido del postulante: </a>");
+								echo ("<a href='./ver_perfil.php?id=".$array['idusuario']."'>".$array['nombre']." ".$array['apellido']."</a>");
+								echo ("<p> Descripcion: ".$array['descripcion']."</p>");
+								echo ("<p>Puntaje: ".$array['puntaje']."</p>"); ?>
+								<p><button class="w3-btn w3-round" name="elegir" value="<?php echo ($array['idpostula']."/".$array['idfavor']); ?>">Elegir postulante</button></p>
+								
+								<?php
+							}	?>
+							</div>
+							</form>
 					<?php
+						}
+						else {
+							echo "<br><br><center> No hay postulaciones a ninguno de tus favores. </center>";
+						}
 						mysqli_close($link);
 					?>
 				</div>
