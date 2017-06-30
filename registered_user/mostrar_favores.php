@@ -230,7 +230,7 @@ while ($array = mysqli_fetch_array($result)){?>
 					$result2 = mysqli_query ($link1, "SELECT * FROM usuario WHERE id = '$array[id_usuario]'");
 					$arreglo = mysqli_fetch_array($result2);
 				?>
-				<a href="ver_perfil.php?id=<?php echo $array['id_usuario']?>"><?php echo $arreglo['nombre']." ".$arreglo['apellido'];?> </a>
+				<a target="_blank" href="ver_perfil.php?id=<?php echo $array['id_usuario']?>"><?php echo $arreglo['nombre']." ".$arreglo['apellido'];?> </a>
 				<?php
 					/* Categoria: */
 					$result2 = mysqli_query ($link1, "SELECT * FROM categoria WHERE id = '$array[id_categoria]'");
