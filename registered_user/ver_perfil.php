@@ -49,6 +49,11 @@
 				</div>
 			</div>
 		</div>	
+	</div>
+	<div id="footer" class="w3-grey" style="bottom: 0; width: 100%; height: 10%;">
+		<br>
+		<center><font size="3">GSoft Web Designer &copy;</font><center>
+		<br>
 	</div>	
 </body>
 </html>

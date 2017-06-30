@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html width="100%" height="100%">
 <head>
 	<title>Una Gauchada - Publicar Favor</title> <!-- Titulo de la pagina -->
 	<link rel="shortcut icon" type="image/x-icon" href="../image/icono_gauchada.ico"> <!-- Icono de la web -->
@@ -39,7 +39,7 @@
 						include_once ('../db/connect.php');
 						$link = conectar();
 						/*$consulta = "SELECT favor.titulo, favor.id AS idfavor, usuario.nombre, usuario.apellido, usuario.puntaje, usuario.id AS idusuario, postula.id AS idpostula, postula.descripcion FROM usuario INNER JOIN postula ON (usuario.id = postula.id_usuario) INNER JOIN favor ON (postula.id_favor = favor.id) WHERE favor.id_usuario = '$_SESSION[id]' AND postula.elegido = 0 AND CURDATE() <= fechalimite AND activo = 1 ORDER BY favor.titulo";*/
-						$consulta = "SELECT favor.id AS idfavor, favor.titulo, favor.id_categoria, favor.descripcion, favor.ciudad, favor.foto, favor.fechalimite, favor.id_usuario, favor.activo, usuario.nombre, usuario.apellido, usuario.puntaje, usuario.id AS idusuario, postula.id AS idpostula, postula.descripcion, COUNT(postula.id_usuario) AS cant FROM favor LEFT JOIN postula ON (favor.id = postula.id_favor) LEFT JOIN usuario ON (postula.id_usuario = usuario.id) WHERE favor.id_usuario = 2 AND (CURDATE() <= favor.fechalimite) AND (favor.activo = 1) GROUP BY favor.titulo ORDER BY cant DESC, favor.titulo";
+						$consulta = "SELECT favor.id AS idfavor, favor.titulo, favor.id_categoria, favor.descripcion, favor.ciudad, favor.foto, favor.fechalimite, favor.id_usuario, favor.activo, usuario.nombre, usuario.apellido, usuario.puntaje, usuario.id AS idusuario, postula.id AS idpostula, postula.descripcion, COUNT(postula.id_usuario) AS cant FROM favor LEFT JOIN postula ON (favor.id = postula.id_favor) LEFT JOIN usuario ON (postula.id_usuario = usuario.id) WHERE favor.id_usuario = '$_SESSION[id]' AND (CURDATE() <= favor.fechalimite) AND (favor.activo = 1) GROUP BY favor.titulo ORDER BY cant DESC, favor.titulo";
 						$result = mysqli_query($link,$consulta);
 						/*if(mysqli_num_rows($result) != 0){*/
 							$titulo = "|/|\|/|\|/|\|/|"; /* String inusual para titulo de favor */
@@ -80,10 +80,10 @@
 			</div>
 		</div>
 	</div>
-	<div id="footer" class="w3-grey">
+	<div id="footer" class="w3-grey" style="position: fixed; bottom: 0; width: 100%; height: 10%;">
 		<br>
-		<center><font  size="3">GSoft Web Designer &copy;</font><center>
+		<center><font size="3">GSoft Web Designer &copy;</font><center>
 		<br>
-	</div>
+	</div>	
 </body>
 </html>

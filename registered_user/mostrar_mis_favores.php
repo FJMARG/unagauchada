@@ -39,7 +39,7 @@ if ((isset ($_POST['titulo'])) AND !(empty($_POST['titulo'])) AND (isset ($_POST
 			$consulta= "SELECT favor.id, favor.titulo, favor.id_categoria, favor.descripcion, favor.ciudad, favor.foto, favor.fechalimite, favor.id_usuario, favor.activo, categoria.nombre FROM favor INNER JOIN categoria ON (favor.id_categoria = categoria.id) WHERE (favor.id_usuario = '$_SESSION[id]') AND favor.titulo LIKE '%$_POST[titulo]%' AND favor.id_categoria = '$_POST[categoria]' AND favor.ciudad = '$_POST[localidad]' ORDER BY categoria.nombre ";
 			break;
 	}
-	$preguntas= "&o=".$_POST['orden']."&cat=".$_POST['categoria']."&loc=".$_POST['localidad']."&tit".$_POST['titulo'];
+	$preguntas= "&o=".$_POST['orden']."&cat=".$_POST['categoria']."&loc=".$_POST['localidad']."&tit=".$_POST['titulo'];
 }
 elseif((isset ($_POST['titulo'])) AND !(empty($_POST['titulo'])) AND (isset ($_POST['categoria'])) AND !(empty($_POST['categoria'])) AND (isset ($_POST['localidad'])) AND !(empty($_POST['localidad']))){
 	$consulta= "SELECT * FROM favor WHERE (id_usuario = '$_SESSION[id]') AND titulo LIKE '%$_POST[titulo]%' AND id_categoria = '$_POST[categoria]' AND ciudad = '$_POST[localidad]' ORDER BY fechalimite";
@@ -246,7 +246,7 @@ while ($array = mysqli_fetch_array($result)){?>
 				<br>
 				<!-- BOTON PARA HACER PREGUNTAS -->
 				<?php if($array['id_usuario'] != $_SESSION['id']){ ?>
-				<a href="preguntas.php?id=<?php echo $array['id']; ?>" class="w3-btn w3-round"> Hacer Pregunta.</a>
+				<a href="mis_preguntas.php?id=<?php echo $array['id'].$preguntas; ?>" class="w3-btn w3-round"> Hacer Pregunta.</a>
 				<br>
 				<br>
 				<!-- BOTON PARA POSTULARSE -->
@@ -254,12 +254,12 @@ while ($array = mysqli_fetch_array($result)){?>
 					$resultado = mysqli_query($link1 ,"SELECT * FROM postula Where (postula.id_usuario = '$_SESSION[id]')AND (postula.id_favor = '$array[id]')");
 					mysqli_close($link1);
 					if (mysqli_num_rows($resultado)==0){ ?>
-						<a href="./postularse.php?id=<?php echo $array['id'].$preguntas; ?>" class="w3-btn w3-round"> Postularse.</a>
+						<a href="./postularse.php?id=<?php echo $array['id']; ?>" class="w3-btn w3-round"> Postularse.</a>
 						<br>
 						<br>
 				<!-- BOTON PARA VER PREGUNTAS -->
 				<?php }} else{ ?>
-				<a href="./preguntas.php?id=<?php echo $array['id'].$preguntas; ?>" class="w3-btn w3-round"> Ver Preguntas.</a> <!-- Aca -->
+				<a href="./mis_preguntas.php?id=<?php echo $array['id'].$preguntas; ?>" class="w3-btn w3-round"> Ver Preguntas.</a> <!-- Aca -->
 				<br>
 				<br>
 				<a href="./borrar_mi_favor.php?id=<?php echo $array['id']; ?>" onclick="return confirmar();" class="w3-btn w3-round"> Borrar Favor.</a>

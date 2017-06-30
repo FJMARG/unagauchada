@@ -41,6 +41,6 @@
 			<option value="3">Categoria</option>
 		</select>
 		<label>&nbsp;&nbsp;&nbsp;</label>
-		<input type="submit"></input>
+		<button class="w3-btn w3-round">Buscar</button>
 	</form>
 </div>

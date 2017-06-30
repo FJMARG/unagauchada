@@ -39,7 +39,7 @@ if ((isset ($_POST['titulo'])) AND !(empty($_POST['titulo'])) AND (isset ($_POST
 			$consulta= "SELECT favor.id, favor.titulo, favor.id_categoria, favor.descripcion, favor.ciudad, favor.foto, favor.fechalimite, favor.id_usuario, favor.activo, categoria.nombre FROM favor INNER JOIN categoria ON (favor.id_categoria = categoria.id) WHERE (CURDATE() <= favor.fechalimite) AND (favor.activo = 1) AND favor.titulo LIKE '%$_POST[titulo]%' AND favor.id_categoria = '$_POST[categoria]' AND favor.ciudad = '$_POST[localidad]' ORDER BY categoria.nombre ";
 			break;
 	}
-	$preguntas= "&o=".$_POST['orden']."&cat=".$_POST['categoria']."&loc=".$_POST['localidad']."&tit".$_POST['titulo'];
+	$preguntas= "&o=".$_POST['orden']."&cat=".$_POST['categoria']."&loc=".$_POST['localidad']."&tit=".$_POST['titulo'];
 }
 elseif((isset ($_POST['titulo'])) AND !(empty($_POST['titulo'])) AND (isset ($_POST['categoria'])) AND !(empty($_POST['categoria'])) AND (isset ($_POST['localidad'])) AND !(empty($_POST['localidad']))){
 	$consulta= "SELECT * FROM favor WHERE (CURDATE() <= fechalimite) AND (activo = 1) AND titulo LIKE '%$_POST[titulo]%' AND id_categoria = '$_POST[categoria]' AND ciudad = '$_POST[localidad]' ORDER BY fechalimite";	
@@ -200,8 +200,11 @@ if (isset ($_GET['ok'])){
 	if ($_GET['ok'] == "2"){
 		echo "<p style='color: green;'>Eliminaste correctamente el favor y se te reembolso un credito.</p>";
 	}
-	else{
+	elseif($_GET['ok'] == "3"){
 		echo "<p style='color: green;'>Eliminaste correctamente el favor.</p>";
+	}
+	else{
+		echo "<p style='color: green;'>Te has postulado correctamente.</p>";
 	}
 }
 
@@ -246,7 +249,7 @@ while ($array = mysqli_fetch_array($result)){?>
 				<br>
 				<!-- BOTON PARA HACER PREGUNTAS -->
 				<?php if($array['id_usuario'] != $_SESSION['id']){ ?>
-				<a href="preguntas.php?id=<?php echo $array['id']; ?>" class="w3-btn w3-round"> Hacer Pregunta.</a>
+				<a href="preguntas.php?id=<?php echo $array['id'].$preguntas; ?>" class="w3-btn w3-round"> Hacer Pregunta.</a>
 				<br>
 				<br>
 				<!-- BOTON PARA POSTULARSE -->
