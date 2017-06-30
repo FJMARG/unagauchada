@@ -30,11 +30,28 @@ function validar (){
 		mes = String(mes);
 	}
 	var ano = fecha[0];
-	var fa = new Date();
+	var aa = (new Date).getFullYear();
+	aa = aa - 18;
+	aa = String(aa);
+	var ma = (new Date).getMonth();
+	if (ma<10){
+		ma = "0"+String(ma);
+	}
+	else{
+		ma = String(ma);
+	}
+	var da = (new Date).getDate();
+	if (da<10){
+		da = "0"+String(da);
+	}
+	else{
+		da = String(da);
+	}
+	var fa = new Date(aa,ma,da);
 	if ((dia.length === 2) && (dia <= 31) && (dia > 0) && (mes <= 11) && (mes.length === 2) && (mes >= 0) && (ano.length === 4) && (ano > 0)){
 		var f = new Date (ano,mes,dia);
 		if (f > fa){
-			alert ('La fecha debe ser menor a la actual.');
+			alert ('Debes tener minimo 18 años para registrarte al sitio.');
 			return false;
 		}
 	}

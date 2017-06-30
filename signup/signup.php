@@ -3,7 +3,7 @@
 	$link = conectar ();
     $result = mysqli_query($link, "SELECT * FROM usuario WHERE email = '$_POST[email]'");
     $cant= mysqli_num_rows($result);
-	if($cant == 0 && strpos($_POST['email'], "@") != false){
+	if($cant == 0 && strpos($_POST['email'], "@") != false && strpos($_POST['email'], ".") != false){
 		mysqli_query($link, "INSERT INTO usuario (puntaje,admin,nombre,apellido,email,password,fecnac,tel,foto) VALUES ('0','0','$_POST[nombre]','$_POST[apellido]','$_POST[email]','$_POST[pw]','$_POST[fecha_nac]','$_POST[telefono]','default.png')");
 		$result = mysqli_query($link, "SELECT * FROM usuario WHERE email = '$_POST[email]'");
 		$array = mysqli_fetch_array($result);
