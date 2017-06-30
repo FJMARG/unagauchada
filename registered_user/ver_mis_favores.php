@@ -21,6 +21,6 @@
 	include_once("./buscar_mis_favores.php");
 ?>
 	<hr style="background-color: orange; height: 1px; margin: 0;">
-	<iframe id="mostrarmisfavores" name="mostrarmisfavores" width="100%" height="80%" style="border:none; position: fixed; bottom: 0%; left: 0; right:0;" src="./mostrar_mis_favores.php"></iframe>
+	<iframe id="mostrarmisfavores" name="mostrarmisfavores" width="100%" height="79%" style="border:none; position: fixed; bottom: 0%; left: 0; right:0;" src="./mostrar_mis_favores.php"></iframe>
 </body>
 </html>

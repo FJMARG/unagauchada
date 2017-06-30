@@ -33,7 +33,7 @@
 						<input type="hidden" name="categoria" value="<?php if (isset($_GET['cat'])) echo $_GET['cat']; ?>">
 						<input type="hidden" name="localidad" value="<?php if (isset($_GET['loc'])) echo $_GET['loc']; ?>">
 						<input type="hidden" name="orden" value="<?php if (isset($_GET['o'])) echo $_GET['o']; ?>">
-						<input type="button" value="Volver" onclick="this.form.submit();"></input>
+						<button class="w3-btn w3-round">Volver</button>
 					</form>
 					<!-- Se muestra un mensaje de error si no hay preguntas en ese favor , si las hay las muestra debajo del h1 de preguntas.-->
 					<h1>Preguntas</h1><br><br>
@@ -53,6 +53,7 @@
 							<textarea class="w3-round" type="text" name="pregunta" id="pregunta" cols="55" rows="5"></textarea>
 							<br><br>
 							<p><button class="w3-btn w3-round">Preguntar</button></p>
+							</form>
 						<?php 
 						}
 						?>

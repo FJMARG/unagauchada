@@ -6,8 +6,6 @@
 	<?php
 	/* Verifica estado de la sesion (si expiro). */
 	include_once("../session/verifySession.php");
-	/* Navbar */
-	include_once("navbar.php");
 	?>
 		
 	<!-- -------------------------------------- Importa los CSS ---------------------------------------- -->
@@ -40,6 +38,14 @@
 							<textarea class="w3-round" type="text" name="pregunta" id="pregunta" cols="50" rows="5"></textarea>
 							<br><br>
 							<p><button class="w3-btn w3-round">Postularse</button></p>
+							</form>
+							<form action="./mostrar_favores.php" method="post" enctype="multipart/form-data">
+							<input type="hidden" name="titulo" value="<?php if (isset($_GET['tit'])) echo $_GET['tit']; ?>">
+							<input type="hidden" name="categoria" value="<?php if (isset($_GET['cat'])) echo $_GET['cat']; ?>">
+							<input type="hidden" name="localidad" value="<?php if (isset($_GET['loc'])) echo $_GET['loc']; ?>">
+							<input type="hidden" name="orden" value="<?php if (isset($_GET['o'])) echo $_GET['o']; ?>">
+							<button class="w3-btn w3-round">Volver</button>
+							</form>
 					</div>
 					</center>
 				</div>
