@@ -1,50 +1,46 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Una Gauchada - Favores</title>
-	<link rel="shortcut icon" type="image/x-icon" href="../image/icono_gauchada.ico">
-	<?php
-	include_once("../session/verifySession.php");
-	include_once("navbar.php");
-	?>
-			
-	<!-- -------------------------------------- Importa los CSS ---------------------------------------- -->
-	<link rel="stylesheet" href="../css/w3.css">
-	<link rel="stylesheet" href="../css/w3-theme-black.css">
-	<!-- ----------------------------------------------------------------------------------------------- -->
-	
-</head>
-<body>
-	<div class="w3-main" style="margin-left:350px">
-		<div style="margin-right:350px">
-			<div class="w3-padding-64">
-				<div class="w3-container">
-					<?php
-						if (isset ($_GET['error']) and ($_GET['error'] == "1"))
-							echo "<font color='red'> No tienes los suficientes creditos para publicar un favor. </font>";
-					?>
-					<center><h1 class="w3-theme-black">Favores</h1><br>
-					<form method="POST" action="buscar_favores.php"> 
-					Palabra clave: <input class="w3-round" type="text" name="palabra" size="20"><br><br> 
-					<button class="w3-btn w3-round">Buscar</button>
-					</form></center>
-					<div class="w3-row-padding">
-					<?php
-						if(isset($_POST['palabra']) && !empty($_POST['palabra'])){
-						include_once ('../db/connect.php');
-						$link = conectar();
-						$palabra = $_POST['palabra'];
-						$result = mysqli_query($link,"SELECT * FROM favor WHERE titulo LIKE '%$palabra%' AND (CURDATE() <= fechalimite)AND activo = 1"); 
-						mysqli_close($link);
-						include_once("mostrar_favores.php");
-						}else{
-						header("location: /registered_user/favores.php?id=incorrecto");
-						}
-					?>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</body>
-</html>
+<div style="margin-left: 8%; padding-top: 64px; padding-bottom: 2.8%;"> <!-- Filtrar por titulo, categoria, ciudad. Ordenar por pocas postulaciones. No se deben borrar los campos del filtro. -->
+	<form action="./mostrar_favores.php" target="mostrarfavores" method="post">
+		<label for="titulo">Titulo: </label>
+		<input name="titulo" type="text"></input>
+		<label for="categoria">Categoria: </label>
+		<select name="categoria">
+			<option value="">Todas</option>
+			<?php
+				include_once ('../db/connect.php');
+				$link = conectar();
+				$result = mysqli_query ($link, "SELECT * FROM categoria");
+				while ($row = mysqli_fetch_array($result)){ ?>
+					<option value="<?php echo $row["id"]; ?>"><?php echo $row["nombre"]; ?></option>
+				<?php
+				}
+				mysqli_free_result($result);
+				mysqli_close($link);
+			?>
+		</select>
+		<label for="localidad">Localidad: </label>
+		<select name="localidad" id="localidad">
+			<option value="">Todas</option>
+				<?php
+					include_once ("../db/connect.php");
+					$link = conectar();
+					$result = mysqli_query ($link, "SELECT localidad FROM localidades ORDER BY localidad");
+					while ($row = mysqli_fetch_array($result)){ ?>
+					<option value="<?php echo $row["localidad"]; ?>"><?php echo $row["localidad"];?></option>
+				<?php
+				}
+					mysqli_free_result($result);
+					mysqli_close($link);
+				?>		
+		</select>
+		<label for="orden">Ordenar por: </label>
+		<select name="orden" id="orden">
+			<option value="">Fecha Limite</option>
+			<option value="titulo">Titulo</option>
+			<option value="ciudad">Localidad</option>
+			<option value="2">Postulantes</option>
+			<option value="3">Categoria</option>
+		</select>
+		<label>&nbsp;&nbsp;&nbsp;</label>
+		<input type="submit"></input>
+	</form>
+</div>

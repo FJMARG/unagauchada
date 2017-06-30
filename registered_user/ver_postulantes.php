@@ -38,9 +38,10 @@
 					<?php
 						include_once ('../db/connect.php');
 						$link = conectar();
-						$consulta = "SELECT favor.titulo, favor.id AS idfavor, usuario.nombre, usuario.apellido, usuario.puntaje, usuario.id AS idusuario, postula.id AS idpostula, postula.descripcion FROM usuario INNER JOIN postula ON (usuario.id = postula.id_usuario) INNER JOIN favor ON (postula.id_favor = favor.id) WHERE favor.id_usuario = '$_SESSION[id]' AND postula.elegido = 0 AND CURDATE() <= fechalimite AND activo = 1 ORDER BY favor.titulo";
+						/*$consulta = "SELECT favor.titulo, favor.id AS idfavor, usuario.nombre, usuario.apellido, usuario.puntaje, usuario.id AS idusuario, postula.id AS idpostula, postula.descripcion FROM usuario INNER JOIN postula ON (usuario.id = postula.id_usuario) INNER JOIN favor ON (postula.id_favor = favor.id) WHERE favor.id_usuario = '$_SESSION[id]' AND postula.elegido = 0 AND CURDATE() <= fechalimite AND activo = 1 ORDER BY favor.titulo";*/
+						$consulta = "SELECT favor.id AS idfavor, favor.titulo, favor.id_categoria, favor.descripcion, favor.ciudad, favor.foto, favor.fechalimite, favor.id_usuario, favor.activo, usuario.nombre, usuario.apellido, usuario.puntaje, usuario.id AS idusuario, postula.id AS idpostula, postula.descripcion, COUNT(postula.id_usuario) AS cant FROM favor LEFT JOIN postula ON (favor.id = postula.id_favor) LEFT JOIN usuario ON (postula.id_usuario = usuario.id) WHERE favor.id_usuario = 2 AND (CURDATE() <= favor.fechalimite) AND (favor.activo = 1) GROUP BY favor.titulo ORDER BY cant DESC, favor.titulo";
 						$result = mysqli_query($link,$consulta);
-						if(mysqli_num_rows($result) != 0){
+						/*if(mysqli_num_rows($result) != 0){*/
 							$titulo = "|/|\|/|\|/|\|/|"; /* String inusual para titulo de favor */
 							$first = 0; /* Variable para corregir el div del formulario. */
 							?>
@@ -58,21 +59,21 @@
 									$titulo = $array ['titulo'];
 									echo ("<p>Titulo del Favor: ".$titulo."</p>");
 								}
-								echo ("<a>Nombre y apellido del postulante: </a>");
-								echo ("<a href='./ver_perfil.php?id=".$array['idusuario']."'>".$array['nombre']." ".$array['apellido']."</a>");
-								echo ("<p> Descripcion: ".$array['descripcion']."</p>");
-								echo ("<p>Puntaje: ".$array['puntaje']."</p>"); ?>
-								<p><button class="w3-btn w3-round" name="elegir" value="<?php echo ($array['idpostula']."/".$array['idfavor']); ?>">Elegir postulante</button></p>
-								
+								if ($array ['cant'] == 0){
+									echo "<p style='color:red;'>Aun no existen postulantes para este favor.</p>";
+								}
+								else {
+									echo ("<a>Nombre y apellido del postulante: </a>");
+									echo ("<a href='./ver_perfil.php?id=".$array['idusuario']."'>".$array['nombre']." ".$array['apellido']."</a>");
+									echo ("<p> Descripcion: ".$array['descripcion']."</p>");
+									echo ("<p>Puntaje: ".$array['puntaje']."</p>"); ?>
+									<p><button class="w3-btn w3-round" name="elegir" value="<?php echo ($array['idpostula']."/".$array['idfavor']); ?>">Elegir postulante</button></p>
 								<?php
+								}
 							}	?>
 							</div>
 							</form>
 					<?php
-						}
-						else {
-							echo "<br><br><center> No hay postulaciones a ninguno de tus favores. </center>";
-						}
 						mysqli_close($link);
 					?>
 				</div>

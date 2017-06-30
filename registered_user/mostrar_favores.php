@@ -1,4 +1,201 @@
+<div class="w3-main" style="margin-left:350px">
+<div style="margin-right:350px">
+<div class="w3-padding-64">
+<div class="w3-container">
+<div class="w3-row-padding">
+	<!-- -------------------------------------- Importa los CSS ---------------------------------------- -->
+	<link rel="stylesheet" href="/css/w3.css">
+	<link rel="stylesheet" href="/css/w3-theme-black.css">
+	<!-- ----------------------------------------------------------------------------------------------- -->
 <?php
+include_once("../session/verifySession.php");
+include_once ('../db/connect.php');
+$link = conectar();
+
+/* Impresiones para debuggear.
+
+echo "<p>Orden: Esta vacio: ".empty($_POST['orden']).". Esta seteado: ".isset($_POST['orden']).". Valor: ".$_POST['orden'].".</p>";
+echo "<p>Titulo: Esta vacio: ".empty($_POST['titulo']).". Esta seteado: ".isset($_POST['titulo'])." Valor: ".$_POST['titulo'].".</p>";
+echo "<p>Localidad: Esta vacio: ".empty($_POST['localidad']).". Esta seteado: ".isset($_POST['localidad']).". Valor: ".$_POST['localidad'].".</p>";
+echo "<p>Categoria: Esta vacio: ".empty($_POST['categoria']).". Esta seteado: ".isset($_POST['categoria']).". Valor: ".$_POST['categoria'].".</p>";
+
+*/
+
+
+/* Corregir de todas las sentencias que tienen switch, el caso 2, ya que es el correspondiente al orden por la cantidad de postulados. */
+
+if ((isset ($_POST['titulo'])) AND !(empty($_POST['titulo'])) AND (isset ($_POST['categoria'])) AND !(empty($_POST['categoria'])) AND (isset ($_POST['localidad'])) AND !(empty($_POST['localidad'])) AND (isset ($_POST['orden'])) AND !(empty($_POST['orden']))){
+	switch ($_POST['orden']){
+		case "titulo":
+			$consulta= "SELECT * FROM favor WHERE (CURDATE() <= fechalimite) AND (activo = 1) AND titulo LIKE '%$_POST[titulo]%' AND id_categoria = '$_POST[categoria]' AND ciudad = '$_POST[localidad]' ORDER BY titulo";
+			break;
+		case "ciudad":
+			$consulta= "SELECT * FROM favor WHERE (CURDATE() <= fechalimite) AND (activo = 1) AND titulo LIKE '%$_POST[titulo]%' AND id_categoria = '$_POST[categoria]' AND ciudad = '$_POST[localidad]' ORDER BY ciudad";
+			break;
+		case 2:
+			$consulta= "SELECT favor.id, favor.titulo, favor.id_categoria, favor.descripcion, favor.ciudad, favor.foto, favor.fechalimite, favor.id_usuario, favor.activo, COUNT(postula.id_usuario) AS cant FROM favor LEFT JOIN postula ON (favor.id = postula.id_favor) WHERE (CURDATE() <= favor.fechalimite) AND (favor.activo = 1) AND favor.titulo LIKE '%$_POST[titulo]%' AND favor.id_categoria = '$_POST[categoria]' AND favor.ciudad = '$_POST[localidad]' GROUP BY favor.id ORDER BY cant";
+			break;
+		case 3:
+			$consulta= "SELECT favor.id, favor.titulo, favor.id_categoria, favor.descripcion, favor.ciudad, favor.foto, favor.fechalimite, favor.id_usuario, favor.activo, categoria.nombre FROM favor INNER JOIN categoria ON (favor.id_categoria = categoria.id) WHERE (CURDATE() <= favor.fechalimite) AND (favor.activo = 1) AND favor.titulo LIKE '%$_POST[titulo]%' AND favor.id_categoria = '$_POST[categoria]' AND favor.ciudad = '$_POST[localidad]' ORDER BY categoria.nombre ";
+			break;
+	}
+	$preguntas= "&o=".$_POST['orden']."&cat=".$_POST['categoria']."&loc=".$_POST['localidad']."&tit".$_POST['titulo'];
+}
+elseif((isset ($_POST['titulo'])) AND !(empty($_POST['titulo'])) AND (isset ($_POST['categoria'])) AND !(empty($_POST['categoria'])) AND (isset ($_POST['localidad'])) AND !(empty($_POST['localidad']))){
+	$consulta= "SELECT * FROM favor WHERE (CURDATE() <= fechalimite) AND (activo = 1) AND titulo LIKE '%$_POST[titulo]%' AND id_categoria = '$_POST[categoria]' AND ciudad = '$_POST[localidad]' ORDER BY fechalimite";	
+	$preguntas= "&tit=".$_POST['titulo']."&cat=".$_POST['categoria']."&loc=".$_POST['localidad'];
+}
+elseif((isset ($_POST['titulo'])) AND !(empty($_POST['titulo'])) AND (isset ($_POST['categoria'])) AND !(empty($_POST['categoria'])) AND (isset ($_POST['orden'])) AND !(empty($_POST['orden']))){
+	switch ($_POST['orden']){
+		case "titulo":
+			$consulta= "SELECT * FROM favor WHERE (CURDATE() <= fechalimite) AND (activo = 1) AND titulo LIKE '%$_POST[titulo]%' AND id_categoria = '$_POST[categoria]' ORDER BY titulo";
+			break;
+		case "ciudad":
+			$consulta= "SELECT * FROM favor WHERE (CURDATE() <= fechalimite) AND (activo = 1) AND titulo LIKE '%$_POST[titulo]%' AND id_categoria = '$_POST[categoria]' ORDER BY ciudad";
+			break;
+		case 2:
+			$consulta= "SELECT favor.id, favor.titulo, favor.id_categoria, favor.descripcion, favor.ciudad, favor.foto, favor.fechalimite, favor.id_usuario, favor.activo, COUNT(postula.id_usuario) AS cant FROM favor LEFT JOIN postula ON (favor.id = postula.id_favor) WHERE (CURDATE() <= favor.fechalimite) AND (favor.activo = 1) AND favor.titulo LIKE '%$_POST[titulo]%' AND favor.id_categoria = '$_POST[categoria]' GROUP BY favor.id ORDER BY cant";
+			break;
+		case 3:
+			$consulta= "SELECT favor.id, favor.titulo, favor.id_categoria, favor.descripcion, favor.ciudad, favor.foto, favor.fechalimite, favor.id_usuario, favor.activo, categoria.nombre FROM favor INNER JOIN categoria ON (favor.id_categoria = categoria.id) WHERE (CURDATE() <= favor.fechalimite) AND (favor.activo = 1) AND favor.titulo LIKE '%$_POST[titulo]%' AND favor.id_categoria = '$_POST[categoria]' ORDER BY categoria.nombre ";
+			break;
+	}
+	$preguntas= "&o=".$_POST['orden']."&cat=".$_POST['categoria']."&tit=".$_POST['titulo'];
+}
+elseif((isset ($_POST['titulo'])) AND !(empty($_POST['titulo'])) AND (isset ($_POST['categoria'])) AND !(empty($_POST['categoria']))){
+	$consulta= "SELECT * FROM favor WHERE (CURDATE() <= fechalimite) AND (activo = 1) AND titulo LIKE '%$_POST[titulo]%' AND id_categoria = '$_POST[categoria] ORDER BY fechalimite'";
+	$preguntas= "&cat=".$_POST['categoria']."&tit=".$_POST['categoria'];
+}
+elseif ((isset ($_POST['titulo'])) AND !(empty($_POST['titulo'])) AND (isset ($_POST['localidad'])) AND !(empty($_POST['localidad'])) AND (isset ($_POST['orden'])) AND !(empty($_POST['orden']))){
+	switch ($_POST['orden']){
+		case "titulo":
+			$consulta= "SELECT * FROM favor WHERE (CURDATE() <= fechalimite) AND (activo = 1) AND titulo LIKE '%$_POST[titulo]%' AND ciudad = '$_POST[localidad]' ORDER BY titulo";
+			break;
+		case "ciudad":
+			$consulta= "SELECT * FROM favor WHERE (CURDATE() <= fechalimite) AND (activo = 1) AND titulo LIKE '%$_POST[titulo]%' AND ciudad = '$_POST[localidad]' ORDER BY ciudad";
+			break;
+		case 2:
+			$consulta= "SELECT favor.id, favor.titulo, favor.id_categoria, favor.descripcion, favor.ciudad, favor.foto, favor.fechalimite, favor.id_usuario, favor.activo, COUNT(postula.id_usuario) AS cant FROM favor LEFT JOIN postula ON (favor.id = postula.id_favor) WHERE (CURDATE() <= favor.fechalimite) AND (favor.activo = 1) AND favor.titulo LIKE '%$_POST[titulo]%' AND favor.ciudad = '$_POST[localidad]' GROUP BY favor.id ORDER BY cant";
+			break;
+		case 3:
+			$consulta= "SELECT favor.id, favor.titulo, favor.id_categoria, favor.descripcion, favor.ciudad, favor.foto, favor.fechalimite, favor.id_usuario, favor.activo, categoria.nombre FROM favor INNER JOIN categoria ON (favor.id_categoria = categoria.id) WHERE (CURDATE() <= favor.fechalimite) AND (favor.activo = 1) AND favor.titulo LIKE '%$_POST[titulo]%' AND favor.ciudad = '$_POST[localidad]' ORDER BY categoria.nombre ";
+			break;
+	}
+	$preguntas= "&o=".$_POST['orden']."&tit=".$_POST['titulo']."&loc=".$_POST['localidad'];
+}
+elseif((isset ($_POST['titulo'])) AND !(empty($_POST['titulo'])) AND (isset ($_POST['localidad'])) AND !(empty($_POST['localidad']))){
+	$consulta= "SELECT * FROM favor WHERE (CURDATE() <= fechalimite) AND (activo = 1) AND titulo LIKE '%$_POST[titulo]%' AND ciudad = '$_POST[localidad]' ORDER BY fechalimite";
+	$preguntas= "&tit=".$_POST['titulo']."&loc=".$_POST['localidad'];
+}
+elseif((isset ($_POST['titulo'])) AND !(empty($_POST['titulo'])) AND (isset ($_POST['orden'])) AND !(empty($_POST['orden']))){
+	switch ($_POST['orden']){
+		case "titulo":
+			$consulta= "SELECT * FROM favor WHERE (CURDATE() <= fechalimite) AND (activo = 1) AND titulo LIKE '%$_POST[titulo]%' ORDER BY titulo";
+			break;
+		case "ciudad":
+			$consulta= "SELECT * FROM favor WHERE (CURDATE() <= fechalimite) AND (activo = 1) AND titulo LIKE '%$_POST[titulo]%' ORDER BY ciudad";
+			break;
+		case 2:
+			$consulta= "SELECT favor.id, favor.titulo, favor.id_categoria, favor.descripcion, favor.ciudad, favor.foto, favor.fechalimite, favor.id_usuario, favor.activo, COUNT(postula.id_usuario) AS cant FROM favor LEFT JOIN postula ON (favor.id = postula.id_favor) WHERE (CURDATE() <= favor.fechalimite) AND (favor.activo = 1) AND favor.titulo LIKE '%$_POST[titulo]%' GROUP BY favor.id ORDER BY cant";
+			break;
+		case 3:
+			$consulta= "SELECT favor.id, favor.titulo, favor.id_categoria, favor.descripcion, favor.ciudad, favor.foto, favor.fechalimite, favor.id_usuario, favor.activo, categoria.nombre FROM favor INNER JOIN categoria ON (favor.id_categoria = categoria.id) WHERE (CURDATE() <= favor.fechalimite) AND (favor.activo = 1) AND favor.titulo LIKE '%$_POST[titulo]%' ORDER BY categoria.nombre ";
+			break;
+	}
+	$preguntas= "&o=".$_POST['orden']."&tit=".$_POST['titulo'];
+}
+elseif((isset ($_POST['titulo'])) AND !(empty($_POST['titulo']))){
+	$consulta= "SELECT * FROM favor WHERE (CURDATE() <= fechalimite) AND (activo = 1) AND titulo LIKE '%$_POST[titulo]%' ORDER BY fechalimite";
+	$preguntas= "&tit=".$_POST['titulo'];
+}
+elseif((isset ($_POST['categoria'])) AND !(empty($_POST['categoria'])) AND (isset ($_POST['localidad'])) AND !(empty($_POST['localidad'])) AND (isset ($_POST['orden'])) AND !(empty($_POST['orden']))){
+	switch ($_POST['orden']){
+		case "titulo":
+			$consulta= "SELECT * FROM favor WHERE (CURDATE() <= fechalimite) AND (activo = 1) AND id_categoria = '$_POST[categoria]' AND ciudad = '$_POST[localidad]' ORDER BY titulo";
+			break;
+		case "ciudad":
+			$consulta= "SELECT * FROM favor WHERE (CURDATE() <= fechalimite) AND (activo = 1) AND id_categoria = '$_POST[categoria]' AND ciudad = '$_POST[localidad]' ORDER BY ciudad";
+			break;
+		case 2:
+			$consulta= "SELECT favor.id, favor.titulo, favor.id_categoria, favor.descripcion, favor.ciudad, favor.foto, favor.fechalimite, favor.id_usuario, favor.activo, COUNT(postula.id_usuario) AS cant FROM favor LEFT JOIN postula ON (favor.id = postula.id_favor) WHERE (CURDATE() <= favor.fechalimite) AND (favor.activo = 1) AND favor.id_categoria = '$_POST[categoria]' AND favor.ciudad = '$_POST[localidad]' GROUP BY favor.id ORDER BY cant";
+			break;
+		case 3:
+			$consulta= "SELECT favor.id, favor.titulo, favor.id_categoria, favor.descripcion, favor.ciudad, favor.foto, favor.fechalimite, favor.id_usuario, favor.activo, categoria.nombre FROM favor INNER JOIN categoria ON (favor.id_categoria = categoria.id) WHERE (CURDATE() <= favor.fechalimite) AND (favor.activo = 1) AND favor.id_categoria = '$_POST[categoria]' AND favor.ciudad = '$_POST[localidad]' ORDER BY categoria.nombre ";
+			break;
+	}
+	$preguntas= "&o=".$_POST['orden']."&cat=".$_POST['categoria']."&loc=".$_POST['localidad'];
+}
+elseif((isset ($_POST['categoria'])) AND !(empty($_POST['categoria'])) AND (isset ($_POST['localidad'])) AND !(empty($_POST['localidad']))){
+	$consulta= "SELECT * FROM favor WHERE (CURDATE() <= fechalimite) AND (activo = 1) AND id_categoria = '$_POST[categoria]' AND ciudad = '$_POST[localidad]' ORDER BY fechalimite";
+	$preguntas= "&loc=".$_POST['localidad']."&cat=".$_POST['categoria'];
+}
+elseif((isset ($_POST['categoria'])) AND !(empty($_POST['categoria'])) AND (isset ($_POST['orden'])) AND !(empty($_POST['orden']))){
+	switch ($_POST['orden']){
+		case "titulo":
+			$consulta= "SELECT * FROM favor WHERE (CURDATE() <= fechalimite) AND (activo = 1) AND id_categoria = '$_POST[categoria]' ORDER BY titulo";
+			break;
+		case "ciudad":
+			$consulta= "SELECT * FROM favor WHERE (CURDATE() <= fechalimite) AND (activo = 1) AND id_categoria = '$_POST[categoria]' ORDER BY ciudad";
+			break;
+		case 2:
+			$consulta= "SELECT favor.id, favor.titulo, favor.id_categoria, favor.descripcion, favor.ciudad, favor.foto, favor.fechalimite, favor.id_usuario, favor.activo, COUNT(postula.id_usuario) AS cant FROM favor LEFT JOIN postula ON (favor.id = postula.id_favor) WHERE (CURDATE() <= favor.fechalimite) AND (favor.activo = 1) AND favor.id_categoria = '$_POST[categoria]' GROUP BY favor.id ORDER BY cant";
+			break;
+		case 3:
+			$consulta= "SELECT favor.id, favor.titulo, favor.id_categoria, favor.descripcion, favor.ciudad, favor.foto, favor.fechalimite, favor.id_usuario, favor.activo, categoria.nombre FROM favor INNER JOIN categoria ON (favor.id_categoria = categoria.id) WHERE (CURDATE() <= favor.fechalimite) AND (favor.activo = 1) AND favor.id_categoria = '$_POST[categoria]' ORDER BY categoria.nombre ";
+			break;
+	}
+	$preguntas= "&o=".$_POST['orden']."&cat=".$_POST['categoria'];
+}
+elseif((isset ($_POST['categoria'])) AND !(empty($_POST['categoria']))){
+	$consulta= "SELECT * FROM favor WHERE (CURDATE() <= fechalimite) AND (activo = 1) AND id_categoria = '$_POST[categoria]' ORDER BY fechalimite";	
+	$preguntas= "&cat=".$_POST['categoria'];
+}
+elseif((isset ($_POST['localidad'])) AND !(empty($_POST['localidad'])) AND (isset ($_POST['orden'])) AND !(empty($_POST['orden']))){
+	switch ($_POST['orden']){
+		case "titulo":
+			$consulta= "SELECT * FROM favor WHERE (CURDATE() <= fechalimite) AND (activo = 1) AND ciudad = '$_POST[localidad]' ORDER BY titulo";
+			break;
+		case "ciudad":
+			$consulta= "SELECT * FROM favor WHERE (CURDATE() <= fechalimite) AND (activo = 1) AND ciudad = '$_POST[localidad]' ORDER BY ciudad";
+			break;
+		case 2:
+			$consulta= "SELECT favor.id, favor.titulo, favor.id_categoria, favor.descripcion, favor.ciudad, favor.foto, favor.fechalimite, favor.id_usuario, favor.activo, COUNT(postula.id_usuario) AS cant FROM favor LEFT JOIN postula ON (favor.id = postula.id_favor) WHERE (CURDATE() <= favor.fechalimite) AND (favor.activo = 1) AND favor.ciudad = '$_POST[localidad]' GROUP BY favor.id ORDER BY cant";
+			break;
+		case 3:
+			$consulta= "SELECT favor.id, favor.titulo, favor.id_categoria, favor.descripcion, favor.ciudad, favor.foto, favor.fechalimite, favor.id_usuario, favor.activo, categoria.nombre FROM favor INNER JOIN categoria ON (favor.id_categoria = categoria.id) WHERE (CURDATE() <= favor.fechalimite) AND (favor.activo = 1) AND favor.ciudad = '$_POST[localidad]' ORDER BY categoria.nombre ";
+			break;
+	}
+	$preguntas= "&o=".$_POST['orden']."&loc=".$_POST['localidad'];
+}
+elseif((isset ($_POST['localidad'])) AND !(empty($_POST['localidad']))){
+	$consulta= "SELECT * FROM favor WHERE (CURDATE() <= fechalimite) AND (activo = 1) AND ciudad = '$_POST[localidad]' ORDER BY fechalimite";
+	$preguntas= "&loc=".$_POST['localidad'];
+}
+elseif((isset ($_POST['orden'])) AND !(empty($_POST['orden']))){
+	switch ($_POST['orden']){
+		case "titulo":
+			$consulta= "SELECT * FROM favor WHERE (CURDATE() <= fechalimite) AND (activo = 1) ORDER BY titulo";
+			break;
+		case "ciudad":
+			$consulta= "SELECT * FROM favor WHERE (CURDATE() <= fechalimite) AND (activo = 1) ORDER BY ciudad";
+			break;
+		case 2:
+			$consulta= "SELECT favor.id, favor.titulo, favor.id_categoria, favor.descripcion, favor.ciudad, favor.foto, favor.fechalimite, favor.id_usuario, favor.activo, COUNT(postula.id_usuario) AS cant FROM favor LEFT JOIN postula ON (favor.id = postula.id_favor) WHERE (CURDATE() <= favor.fechalimite) AND (favor.activo = 1) GROUP BY favor.id ORDER BY cant ";
+			break;
+		case 3:
+			$consulta= "SELECT favor.id, favor.titulo, favor.id_categoria, favor.descripcion, favor.ciudad, favor.foto, favor.fechalimite, favor.id_usuario, favor.activo, categoria.nombre FROM favor INNER JOIN categoria ON (favor.id_categoria = categoria.id) WHERE (CURDATE() <= favor.fechalimite) AND (favor.activo = 1) ORDER BY categoria.nombre ";
+			break;
+	}
+	$preguntas= "&o=".$_POST['orden'];
+}
+else{
+	$consulta = "SELECT * FROM favor WHERE (CURDATE() <= fechalimite) AND (activo = 1) ORDER BY fechalimite";
+	$preguntas= "";
+}
+
+$result = mysqli_query($link, $consulta);
+mysqli_close($link);
+
 $index = 0;
 if (mysqli_num_rows($result)!=0){
 while ($array = mysqli_fetch_array($result)){?>
@@ -47,12 +244,12 @@ while ($array = mysqli_fetch_array($result)){?>
 					$resultado = mysqli_query($link1 ,"SELECT * FROM postula Where (postula.id_usuario = '$_SESSION[id]')AND (postula.id_favor = '$array[id]')");
 					mysqli_close($link1);
 					if (mysqli_num_rows($resultado)==0){ ?>
-						<a href="postularse.php?id=<?php echo $array['id']; ?>" class="w3-btn w3-round"> Postularse.</a>
+						<a href="postularse.php?id=<?php echo $array['id'].$preguntas; ?>" class="w3-btn w3-round"> Postularse.</a>
 						<br>
 						<br>
 				<!-- BOTON PARA VER PREGUNTAS -->
 				<?php }} else{ ?>
-				<a href="preguntas.php?id=<?php echo $array['id']; ?>" class="w3-btn w3-round"> Ver Preguntas.</a>
+				<a href="preguntas.php?id=<?php echo $array['id'].$preguntas; ?>" class="w3-btn w3-round"> Ver Preguntas.</a>
 				<br>
 				<br>
 				<?php } ?>
@@ -70,6 +267,11 @@ else{ ?>
 	<br>
 	<br>
 <?php
-	echo "Aun no se han publicado favores o no existen favores que contengan las palabras claves ingresadas.";
+	echo "Aun no se han publicado favores o no existen favores que contengan los filtros ingresados.";
 }
 ?>
+				</div>
+			</div>
+		</div>
+	</div>					
+</div>

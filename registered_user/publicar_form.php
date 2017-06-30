@@ -65,7 +65,7 @@
 							<?php
 								include_once ("../db/connect.php");
 								$link = conectar();
-								$result = mysqli_query ($link, "SELECT * FROM localidades");
+								$result = mysqli_query ($link, "SELECT localidad FROM localidades ORDER BY localidad");
 								while ($row = mysqli_fetch_array($result)){ ?>
 								<option value="<?php echo $row["localidad"]; ?>"><?php echo $row["localidad"];?></option>
 							<?php
