@@ -10,10 +10,10 @@
 		mysqli_query($con, "UPDATE credito SET credito.cantidad = credito.cantidad + 1 WHERE credito.id_usuario = '$usuario[id_usuario]'");
 		mysqli_query($con,"DELETE FROM `favor` WHERE `favor`.`id` = '$_GET[id]'");
 		mysqli_close($con);
-		header("location: ./mostrar_favores.php?ok=2");
+		header("location: ./mostrar_mis_favores.php?ok=2");
 	}else{
 		mysqli_query($con,"DELETE FROM `favor` WHERE `favor`.`id` = '$_GET[id]'")or die("no se pudo pipi");
 		mysqli_close($con);
-		header("location: ./mostrar_favores.php?ok=3");
+		header("location: ./mostrar_mis_favores.php?ok=3");
 	}
 ?>
