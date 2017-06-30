@@ -21,11 +21,6 @@
 	include_once("./buscar_mis_favores.php");
 ?>
 	<hr style="background-color: orange; height: 1px; margin: 0;">
-	<iframe id="mostrarmisfavores" name="mostrarmisfavores" width="100%" height="70%" style="border:none; position: fixed; bottom: 10%; left: 0; right:0;" src="./mostrar_mis_favores.php"></iframe>
-	<div id="footer" class="w3-grey" style="position: fixed; bottom: 0; width: 100%; height: 10%;">
-		<br>
-		<center><font size="3">GSoft Web Designer &copy;</font><center>
-		<br>
-	</div>
+	<iframe id="mostrarmisfavores" name="mostrarmisfavores" width="100%" height="80%" style="border:none; position: fixed; bottom: 0%; left: 0; right:0;" src="./mostrar_mis_favores.php"></iframe>
 </body>
 </html>
