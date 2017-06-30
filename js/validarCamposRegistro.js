@@ -43,8 +43,8 @@ function validar (){
 		return false;
 	}
 	var res=document.getElementById("rta").innerText;
-	if (res === "E-mail no disponible." || res.length === 0){
-		alert ("El E-mail no permitido o no disponible.");
+	if (res === "E-mail no disponible o no permitido." || res.length === 0){
+		alert ("E-mail no disponible o no permitido.");
 		return false;
 	}
 }
