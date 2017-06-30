@@ -1,41 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Una Gauchada - Favores</title>
-	<link rel="shortcut icon" type="image/x-icon" href="../image/icono_gauchada.ico">
+	<title>Una Gauchada - Mis Favores</title> <!-- Titulo de la pagina -->
+	<link rel="shortcut icon" type="image/x-icon" href="../image/icono_gauchada.ico"> <!-- Icono de la web -->
 	<?php
+	/* Verifica estado de la sesion (si expiro). */
 	include_once("../session/verifySession.php");
+	/* Navbar */
 	include_once("navbar.php");
 	?>
-		
 	<!-- -------------------------------------- Importa los CSS ---------------------------------------- -->
 	<link rel="stylesheet" href="/css/w3.css">
 	<link rel="stylesheet" href="/css/w3-theme-black.css">
 	<!-- ----------------------------------------------------------------------------------------------- -->
-	
+
 </head>
 <body>
-	<div class="w3-main" style="margin-left:350px">
-		<div style="margin-right:350px">
-			<div class="w3-padding-64">
-				<div class="w3-container">
-					<?php
-						if (isset ($_GET['error']) and ($_GET['error'] == "1"))
-							echo "<font color='red'> No tienes los suficientes creditos para publicar un favor. </font>";
-					?>
-					<center><h1 class="w3-theme-black">Mis Favores</h1><br></center>
-					<div class="w3-row-padding">
-					<?php
-						include_once ('../db/connect.php');
-						$link = conectar();
-						$result = mysqli_query($link,"SELECT * FROM favor WHERE id_usuario = '$_SESSION[id]' and (CURDATE() <= fechalimite) ORDER BY fechalimite"); 
-						mysqli_close($link);
-						include_once("mostrar_favores.php");
-					?>
-					</div>
-				</div>
-			</div>
-		</div>
+<?php
+	/* Barra de busqueda */
+	include_once("./buscar_mis_favores.php");
+?>
+	<hr style="background-color: orange; height: 1px; margin: 0;">
+	<iframe id="mostrarmisfavores" name="mostrarmisfavores" width="100%" height="70%" style="border:none; position: fixed; bottom: 10%; left: 0; right:0;" src="./mostrar_mis_favores.php"></iframe>
+	<div id="footer" class="w3-grey" style="position: fixed; bottom: 0; width: 100%; height: 10%;">
+		<br>
+		<center><font size="3">GSoft Web Designer &copy;</font><center>
+		<br>
 	</div>
 </body>
 </html>
