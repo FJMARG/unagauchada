@@ -6,7 +6,7 @@ Modifica el parrafo con id rta y obtiene el valor del input con id email. Al ing
 $(function(){
 	$("#email").on("input", function(){
 		var correo=$(this).val();
-		if (correo.indexOf('@') !== -1){
+		if (correo.indexOf('@') !== -1 && correo.indexOf ('.') !== -1){
 			var cant;
 			$.ajax({
 					data: {"correo":correo},
