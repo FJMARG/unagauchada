@@ -16,5 +16,5 @@
 	}elseif($datos['puntaje'] > 50){
 		$rango = 'Dios';
 	}
-		echo $rango; 
+		echo " (".$rango.")";  
 ?>

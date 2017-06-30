@@ -22,7 +22,7 @@
 		<div style="margin-right:350px">
 			<div class="w3-row w3-padding-64">
 				<div class="w3-container">
-					<center><h1 class="w3-theme-black">Datos de tu perfil</h1></center>
+					<center><h1 class="w3-theme-black">Postulantes</h1></center>
 					<script language= "javascript" src="../js/validarPostulante.js"></script>
 					<?php
 						if (isset ($_GET['result'])){
@@ -80,7 +80,7 @@
 			</div>
 		</div>
 	</div>
-	<div id="footer" class="w3-grey" style="position: fixed; bottom: 0; width: 100%; height: 10%;">
+	<div id="footer" class="w3-light-orange" style="position: fixed; bottom: 0; width: 100%; height: 10%;">
 		<br>
 		<center><font size="3">GSoft Web Designer &copy;</font><center>
 		<br>

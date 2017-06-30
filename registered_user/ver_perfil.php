@@ -39,8 +39,9 @@
 						<p><h3><strong>Fecha De Nacimiento: </strong><i><?php echo $datos['fecnac']; ?></i></h3></p>
 						<p><h3><strong>Telefono: </strong><i><?php echo $datos['tel']; ?></i></h3></p>
 						<p><h3><strong>Creditos: </strong><i><?php echo $datos2['cantidad']; ?></i></h3></p>
-						<p><h3><strong>Rango: </strong><i>
-						<?php 
+						<p><h3><strong>Puntos: </strong><i>
+						<?php
+							echo $datos['puntaje'];
 							include_once("calcular_rango.php");
 						?>
 						</i></h3></p>
@@ -50,7 +51,7 @@
 			</div>
 		</div>	
 	</div>
-	<div id="footer" class="w3-grey" style="bottom: 0; width: 100%; height: 10%;">
+	<div id="footer" class="w3-light-orange" style="bottom: 0; width: 100%; height: 10%;">
 		<br>
 		<center><font size="3">GSoft Web Designer &copy;</font><center>
 		<br>
