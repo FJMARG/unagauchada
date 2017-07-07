@@ -1,4 +1,4 @@
-<div class="w3-main" style="margin-left:350px">
+<div class="w3-main" style="margin-left:350px; margin-top:3%; padding-top:3%">
 <div style="margin-right:350px">
 <div class="w3-padding-64">
 <div class="w3-container">
@@ -22,8 +22,179 @@ echo "<p>Categoria: Esta vacio: ".empty($_POST['categoria']).". Esta seteado: ".
 */
 
 
-/* Corregir de todas las sentencias que tienen switch, el caso 2, ya que es el correspondiente al orden por la cantidad de postulados. */
 
+if ((isset($_GET['owner']) && ($_GET['owner'] == "yes")) || (isset($_POST['owner']) && ($_POST['owner'] == "yes"))){
+	if ((isset ($_POST['titulo'])) AND !(empty($_POST['titulo'])) AND (isset ($_POST['categoria'])) AND !(empty($_POST['categoria'])) AND (isset ($_POST['localidad'])) AND !(empty($_POST['localidad'])) AND (isset ($_POST['orden'])) AND !(empty($_POST['orden']))){
+		switch ($_POST['orden']){
+			case "titulo":
+				$consulta= "SELECT * FROM favor WHERE (id_usuario = '$_SESSION[id]') AND titulo LIKE '%$_POST[titulo]%' AND id_categoria = '$_POST[categoria]' AND ciudad = '$_POST[localidad]' ORDER BY titulo";
+				break;
+			case "ciudad":
+				$consulta= "SELECT * FROM favor WHERE (id_usuario = '$_SESSION[id]') AND titulo LIKE '%$_POST[titulo]%' AND id_categoria = '$_POST[categoria]' AND ciudad = '$_POST[localidad]' ORDER BY ciudad";
+				break;
+			case 2:
+				$consulta= "SELECT favor.id, favor.titulo, favor.id_categoria, favor.descripcion, favor.ciudad, favor.foto, favor.fechalimite, favor.id_usuario, favor.activo, COUNT(postula.id_usuario) AS cant FROM favor LEFT JOIN postula ON (favor.id = postula.id_favor) WHERE (favor.id_usuario = '$_SESSION[id]') AND favor.titulo LIKE '%$_POST[titulo]%' AND favor.id_categoria = '$_POST[categoria]' AND favor.ciudad = '$_POST[localidad]' GROUP BY favor.id ORDER BY cant";
+				break;
+			case 3:
+				$consulta= "SELECT favor.id, favor.titulo, favor.id_categoria, favor.descripcion, favor.ciudad, favor.foto, favor.fechalimite, favor.id_usuario, favor.activo, categoria.nombre FROM favor INNER JOIN categoria ON (favor.id_categoria = categoria.id) WHERE (favor.id_usuario = '$_SESSION[id]') AND favor.titulo LIKE '%$_POST[titulo]%' AND favor.id_categoria = '$_POST[categoria]' AND favor.ciudad = '$_POST[localidad]' ORDER BY categoria.nombre ";
+				break;
+		}
+		$preguntas= "&o=".$_POST['orden']."&cat=".$_POST['categoria']."&loc=".$_POST['localidad']."&tit=".$_POST['titulo'];
+	}
+	elseif((isset ($_POST['titulo'])) AND !(empty($_POST['titulo'])) AND (isset ($_POST['categoria'])) AND !(empty($_POST['categoria'])) AND (isset ($_POST['localidad'])) AND !(empty($_POST['localidad']))){
+		$consulta= "SELECT * FROM favor WHERE (id_usuario = '$_SESSION[id]') AND titulo LIKE '%$_POST[titulo]%' AND id_categoria = '$_POST[categoria]' AND ciudad = '$_POST[localidad]' ORDER BY fechalimite";
+		$preguntas= "&tit=".$_POST['titulo']."&cat=".$_POST['categoria']."&loc=".$_POST['localidad'];
+	}
+	elseif((isset ($_POST['titulo'])) AND !(empty($_POST['titulo'])) AND (isset ($_POST['categoria'])) AND !(empty($_POST['categoria'])) AND (isset ($_POST['orden'])) AND !(empty($_POST['orden']))){
+		switch ($_POST['orden']){
+			case "titulo":
+				$consulta= "SELECT * FROM favor WHERE (id_usuario = '$_SESSION[id]') AND titulo LIKE '%$_POST[titulo]%' AND id_categoria = '$_POST[categoria]' ORDER BY titulo";
+				break;
+			case "ciudad":
+				$consulta= "SELECT * FROM favor WHERE (id_usuario = '$_SESSION[id]') AND titulo LIKE '%$_POST[titulo]%' AND id_categoria = '$_POST[categoria]' ORDER BY ciudad";
+				break;
+			case 2:
+				$consulta= "SELECT favor.id, favor.titulo, favor.id_categoria, favor.descripcion, favor.ciudad, favor.foto, favor.fechalimite, favor.id_usuario, favor.activo, COUNT(postula.id_usuario) AS cant FROM favor LEFT JOIN postula ON (favor.id = postula.id_favor) WHERE (favor.id_usuario = '$_SESSION[id]') AND favor.titulo LIKE '%$_POST[titulo]%' AND favor.id_categoria = '$_POST[categoria]' GROUP BY favor.id ORDER BY cant";
+				break;
+			case 3:
+				$consulta= "SELECT favor.id, favor.titulo, favor.id_categoria, favor.descripcion, favor.ciudad, favor.foto, favor.fechalimite, favor.id_usuario, favor.activo, categoria.nombre FROM favor INNER JOIN categoria ON (favor.id_categoria = categoria.id) WHERE (favor.id_usuario = '$_SESSION[id]') AND favor.titulo LIKE '%$_POST[titulo]%' AND favor.id_categoria = '$_POST[categoria]' ORDER BY categoria.nombre ";
+				break;
+		}
+		$preguntas= "&o=".$_POST['orden']."&cat=".$_POST['categoria']."&tit=".$_POST['titulo'];
+	}
+	elseif((isset ($_POST['titulo'])) AND !(empty($_POST['titulo'])) AND (isset ($_POST['categoria'])) AND !(empty($_POST['categoria']))){
+		$consulta= "SELECT * FROM favor WHERE (id_usuario = '$_SESSION[id]') AND titulo LIKE '%$_POST[titulo]%' AND id_categoria = '$_POST[categoria] ORDER BY fechalimite'";
+		$preguntas= "&cat=".$_POST['categoria']."&tit=".$_POST['categoria'];
+	}
+	elseif ((isset ($_POST['titulo'])) AND !(empty($_POST['titulo'])) AND (isset ($_POST['localidad'])) AND !(empty($_POST['localidad'])) AND (isset ($_POST['orden'])) AND !(empty($_POST['orden']))){
+		switch ($_POST['orden']){
+			case "titulo":
+				$consulta= "SELECT * FROM favor WHERE (id_usuario = '$_SESSION[id]') AND titulo LIKE '%$_POST[titulo]%' AND ciudad = '$_POST[localidad]' ORDER BY titulo";
+				break;
+			case "ciudad":
+				$consulta= "SELECT * FROM favor WHERE (id_usuario = '$_SESSION[id]') AND titulo LIKE '%$_POST[titulo]%' AND ciudad = '$_POST[localidad]' ORDER BY ciudad";
+				break;
+			case 2:
+				$consulta= "SELECT favor.id, favor.titulo, favor.id_categoria, favor.descripcion, favor.ciudad, favor.foto, favor.fechalimite, favor.id_usuario, favor.activo, COUNT(postula.id_usuario) AS cant FROM favor LEFT JOIN postula ON (favor.id = postula.id_favor) WHERE (favor.id_usuario = '$_SESSION[id]') AND favor.titulo LIKE '%$_POST[titulo]%' AND favor.ciudad = '$_POST[localidad]' GROUP BY favor.id ORDER BY cant";
+				break;
+			case 3:
+				$consulta= "SELECT favor.id, favor.titulo, favor.id_categoria, favor.descripcion, favor.ciudad, favor.foto, favor.fechalimite, favor.id_usuario, favor.activo, categoria.nombre FROM favor INNER JOIN categoria ON (favor.id_categoria = categoria.id) WHERE (favor.id_usuario = '$_SESSION[id]') AND favor.titulo LIKE '%$_POST[titulo]%' AND favor.ciudad = '$_POST[localidad]' ORDER BY categoria.nombre ";
+				break;
+		}
+		$preguntas= "&o=".$_POST['orden']."&tit=".$_POST['titulo']."&loc=".$_POST['localidad'];
+	}
+	elseif((isset ($_POST['titulo'])) AND !(empty($_POST['titulo'])) AND (isset ($_POST['localidad'])) AND !(empty($_POST['localidad']))){
+		$consulta= "SELECT * FROM favor WHERE (id_usuario = '$_SESSION[id]') AND titulo LIKE '%$_POST[titulo]%' AND ciudad = '$_POST[localidad]' ORDER BY fechalimite";
+		$preguntas= "&tit=".$_POST['titulo']."&loc=".$_POST['localidad'];
+	}
+	elseif((isset ($_POST['titulo'])) AND !(empty($_POST['titulo'])) AND (isset ($_POST['orden'])) AND !(empty($_POST['orden']))){
+		switch ($_POST['orden']){
+			case "titulo":
+				$consulta= "SELECT * FROM favor WHERE (id_usuario = '$_SESSION[id]') AND titulo LIKE '%$_POST[titulo]%' ORDER BY titulo";
+				break;
+			case "ciudad":
+				$consulta= "SELECT * FROM favor WHERE (id_usuario = '$_SESSION[id]') AND titulo LIKE '%$_POST[titulo]%' ORDER BY ciudad";
+				break;
+			case 2:
+				$consulta= "SELECT favor.id, favor.titulo, favor.id_categoria, favor.descripcion, favor.ciudad, favor.foto, favor.fechalimite, favor.id_usuario, favor.activo, COUNT(postula.id_usuario) AS cant FROM favor LEFT JOIN postula ON (favor.id = postula.id_favor) WHERE (favor.id_usuario = '$_SESSION[id]') AND favor.titulo LIKE '%$_POST[titulo]%' GROUP BY favor.id ORDER BY cant";
+				break;
+			case 3:
+				$consulta= "SELECT favor.id, favor.titulo, favor.id_categoria, favor.descripcion, favor.ciudad, favor.foto, favor.fechalimite, favor.id_usuario, favor.activo, categoria.nombre FROM favor INNER JOIN categoria ON (favor.id_categoria = categoria.id) WHERE (favor.id_usuario = '$_SESSION[id]') AND favor.titulo LIKE '%$_POST[titulo]%' ORDER BY categoria.nombre ";
+				break;
+		}
+		$preguntas= "&o=".$_POST['orden']."&tit=".$_POST['titulo'];
+	}
+	elseif((isset ($_POST['titulo'])) AND !(empty($_POST['titulo']))){
+		$consulta= "SELECT * FROM favor WHERE (id_usuario = '$_SESSION[id]') AND titulo LIKE '%$_POST[titulo]%' ORDER BY fechalimite";
+		$preguntas= "&tit=".$_POST['titulo'];
+	}
+	elseif((isset ($_POST['categoria'])) AND !(empty($_POST['categoria'])) AND (isset ($_POST['localidad'])) AND !(empty($_POST['localidad'])) AND (isset ($_POST['orden'])) AND !(empty($_POST['orden']))){
+		switch ($_POST['orden']){
+			case "titulo":
+				$consulta= "SELECT * FROM favor WHERE (id_usuario = '$_SESSION[id]') AND id_categoria = '$_POST[categoria]' AND ciudad = '$_POST[localidad]' ORDER BY titulo";
+				break;
+			case "ciudad":
+				$consulta= "SELECT * FROM favor WHERE (id_usuario = '$_SESSION[id]') AND id_categoria = '$_POST[categoria]' AND ciudad = '$_POST[localidad]' ORDER BY ciudad";
+				break;
+			case 2:
+				$consulta= "SELECT favor.id, favor.titulo, favor.id_categoria, favor.descripcion, favor.ciudad, favor.foto, favor.fechalimite, favor.id_usuario, favor.activo, COUNT(postula.id_usuario) AS cant FROM favor LEFT JOIN postula ON (favor.id = postula.id_favor) WHERE (favor.id_usuario = '$_SESSION[id]') AND favor.id_categoria = '$_POST[categoria]' AND favor.ciudad = '$_POST[localidad]' GROUP BY favor.id ORDER BY cant";
+				break;
+			case 3:
+				$consulta= "SELECT favor.id, favor.titulo, favor.id_categoria, favor.descripcion, favor.ciudad, favor.foto, favor.fechalimite, favor.id_usuario, favor.activo, categoria.nombre FROM favor INNER JOIN categoria ON (favor.id_categoria = categoria.id) WHERE (favor.id_usuario = '$_SESSION[id]') AND favor.id_categoria = '$_POST[categoria]' AND favor.ciudad = '$_POST[localidad]' ORDER BY categoria.nombre ";
+				break;
+		}
+		$preguntas= "&o=".$_POST['orden']."&cat=".$_POST['categoria']."&loc=".$_POST['localidad'];
+	}
+	elseif((isset ($_POST['categoria'])) AND !(empty($_POST['categoria'])) AND (isset ($_POST['localidad'])) AND !(empty($_POST['localidad']))){
+		$consulta= "SELECT * FROM favor WHERE (id_usuario = '$_SESSION[id]') AND id_categoria = '$_POST[categoria]' AND ciudad = '$_POST[localidad]' ORDER BY fechalimite";
+		$preguntas= "&loc=".$_POST['localidad']."&cat=".$_POST['categoria'];
+	}
+	elseif((isset ($_POST['categoria'])) AND !(empty($_POST['categoria'])) AND (isset ($_POST['orden'])) AND !(empty($_POST['orden']))){
+		switch ($_POST['orden']){
+			case "titulo":
+				$consulta= "SELECT * FROM favor WHERE (id_usuario = '$_SESSION[id]') AND id_categoria = '$_POST[categoria]' ORDER BY titulo";
+				break;
+			case "ciudad":
+				$consulta= "SELECT * FROM favor WHERE (id_usuario = '$_SESSION[id]') AND id_categoria = '$_POST[categoria]' ORDER BY ciudad";
+				break;
+			case 2:
+				$consulta= "SELECT favor.id, favor.titulo, favor.id_categoria, favor.descripcion, favor.ciudad, favor.foto, favor.fechalimite, favor.id_usuario, favor.activo, COUNT(postula.id_usuario) AS cant FROM favor LEFT JOIN postula ON (favor.id = postula.id_favor) WHERE (favor.id_usuario = '$_SESSION[id]') AND favor.id_categoria = '$_POST[categoria]' GROUP BY favor.id ORDER BY cant";
+				break;
+			case 3:
+				$consulta= "SELECT favor.id, favor.titulo, favor.id_categoria, favor.descripcion, favor.ciudad, favor.foto, favor.fechalimite, favor.id_usuario, favor.activo, categoria.nombre FROM favor INNER JOIN categoria ON (favor.id_categoria = categoria.id) WHERE (favor.id_usuario = '$_SESSION[id]') AND favor.id_categoria = '$_POST[categoria]' ORDER BY categoria.nombre ";
+				break;
+		}
+		$preguntas= "&o=".$_POST['orden']."&cat=".$_POST['categoria'];
+	}
+	elseif((isset ($_POST['categoria'])) AND !(empty($_POST['categoria']))){
+		$consulta= "SELECT * FROM favor WHERE (id_usuario = '$_SESSION[id]') AND id_categoria = '$_POST[categoria]' ORDER BY fechalimite";
+		$preguntas= "&cat=".$_POST['categoria'];
+	}
+	elseif((isset ($_POST['localidad'])) AND !(empty($_POST['localidad'])) AND (isset ($_POST['orden'])) AND !(empty($_POST['orden']))){
+		switch ($_POST['orden']){
+			case "titulo":
+				$consulta= "SELECT * FROM favor WHERE (id_usuario = '$_SESSION[id]') AND ciudad = '$_POST[localidad]' ORDER BY titulo";
+				break;
+			case "ciudad":
+				$consulta= "SELECT * FROM favor WHERE (id_usuario = '$_SESSION[id]') AND ciudad = '$_POST[localidad]' ORDER BY ciudad";
+				break;
+			case 2:
+				$consulta= "SELECT favor.id, favor.titulo, favor.id_categoria, favor.descripcion, favor.ciudad, favor.foto, favor.fechalimite, favor.id_usuario, favor.activo, COUNT(postula.id_usuario) AS cant FROM favor LEFT JOIN postula ON (favor.id = postula.id_favor) WHERE (favor.id_usuario = '$_SESSION[id]') AND favor.ciudad = '$_POST[localidad]' GROUP BY favor.id ORDER BY cant";
+				break;
+			case 3:
+				$consulta= "SELECT favor.id, favor.titulo, favor.id_categoria, favor.descripcion, favor.ciudad, favor.foto, favor.fechalimite, favor.id_usuario, favor.activo, categoria.nombre FROM favor INNER JOIN categoria ON (favor.id_categoria = categoria.id) WHERE (favor.id_usuario = '$_SESSION[id]') AND favor.ciudad = '$_POST[localidad]' ORDER BY categoria.nombre ";
+				break;
+		}
+		$preguntas= "&o=".$_POST['orden']."&loc=".$_POST['localidad'];
+	}
+	elseif((isset ($_POST['localidad'])) AND !(empty($_POST['localidad']))){
+		$consulta= "SELECT * FROM favor WHERE (id_usuario = '$_SESSION[id]') AND ciudad = '$_POST[localidad]' ORDER BY fechalimite";
+		$preguntas= "&loc=".$_POST['localidad'];
+	}
+	elseif((isset ($_POST['orden'])) AND !(empty($_POST['orden']))){
+		switch ($_POST['orden']){
+			case "titulo":
+				$consulta= "SELECT * FROM favor WHERE (id_usuario = '$_SESSION[id]') ORDER BY titulo";
+				break;
+			case "ciudad":
+				$consulta= "SELECT * FROM favor WHERE (id_usuario = '$_SESSION[id]') ORDER BY ciudad";
+				break;
+			case 2:
+				$consulta= "SELECT favor.id, favor.titulo, favor.id_categoria, favor.descripcion, favor.ciudad, favor.foto, favor.fechalimite, favor.id_usuario, favor.activo, COUNT(postula.id_usuario) AS cant FROM favor LEFT JOIN postula ON (favor.id = postula.id_favor) WHERE (favor.id_usuario = '$_SESSION[id]') GROUP BY favor.id ORDER BY cant ";
+				break;
+			case 3:
+				$consulta= "SELECT favor.id, favor.titulo, favor.id_categoria, favor.descripcion, favor.ciudad, favor.foto, favor.fechalimite, favor.id_usuario, favor.activo, categoria.nombre FROM favor INNER JOIN categoria ON (favor.id_categoria = categoria.id) WHERE (favor.id_usuario = '$_SESSION[id]') ORDER BY categoria.nombre ";
+				break;
+		}
+		$preguntas= "&o=".$_POST['orden'];
+	}
+	else{
+		$consulta = "SELECT * FROM favor WHERE (id_usuario = '$_SESSION[id]') ORDER BY fechalimite";
+		$preguntas= "";
+	}
+	$preguntas=$preguntas."&owner=yes";
+}
+else {
 if ((isset ($_POST['titulo'])) AND !(empty($_POST['titulo'])) AND (isset ($_POST['categoria'])) AND !(empty($_POST['categoria'])) AND (isset ($_POST['localidad'])) AND !(empty($_POST['localidad'])) AND (isset ($_POST['orden'])) AND !(empty($_POST['orden']))){
 	switch ($_POST['orden']){
 		case "titulo":
@@ -64,7 +235,7 @@ elseif((isset ($_POST['titulo'])) AND !(empty($_POST['titulo'])) AND (isset ($_P
 }
 elseif((isset ($_POST['titulo'])) AND !(empty($_POST['titulo'])) AND (isset ($_POST['categoria'])) AND !(empty($_POST['categoria']))){
 	$consulta= "SELECT * FROM favor WHERE (CURDATE() <= fechalimite) AND (activo = 1) AND titulo LIKE '%$_POST[titulo]%' AND id_categoria = '$_POST[categoria] ORDER BY fechalimite'";
-	$preguntas= "&cat=".$_POST['categoria']."&tit=".$_POST['categoria'];
+	$preguntas= "&cat=".$_POST['categoria']."&tit=".$_POST['titulo'];
 }
 elseif ((isset ($_POST['titulo'])) AND !(empty($_POST['titulo'])) AND (isset ($_POST['localidad'])) AND !(empty($_POST['localidad'])) AND (isset ($_POST['orden'])) AND !(empty($_POST['orden']))){
 	switch ($_POST['orden']){
@@ -193,8 +364,9 @@ else{
 	$preguntas= "";
 }
 
+}
+
 $result = mysqli_query($link, $consulta);
-mysqli_close($link);
 
 if (isset ($_GET['ok'])){
 	if ($_GET['ok'] == "2"){
@@ -216,6 +388,29 @@ while ($array = mysqli_fetch_array($result)){?>
 			<center>
 				<h2> <?php echo $array['titulo']; ?></h3>
 				<img class="w3-round" src='/image/favor/<?php echo "$array[foto]"; ?>' width="300" height="300"/>
+				<br>
+				<br>
+				<?php
+					$result3 = mysqli_query($link,"SELECT calificacion, nombre, apellido FROM calificacion INNER JOIN (SELECT postula.id_usuario, usuario.nombre, usuario.apellido FROM postula INNER JOIN usuario ON (postula.id_usuario = usuario.id) WHERE postula.id_favor = '$array[id]' AND postula.elegido = 1) r ON (r.id_usuario = calificacion.id_usuario_r) WHERE calificacion.id_favor = '$array[id]'");
+					$array3 = mysqli_fetch_array($result3);
+					if ($array ['activo'] == 0){
+						if ($array3['calificacion'] == 1){
+							echo "<a style='color:green;'>El favor fue cumplido correctamente.</a>";
+							echo "<br><a style='color:green;'>Responsable: ".$array3['nombre']." ".$array3['apellido'].".</a>";
+						}
+						else {
+							echo "<a style='color:red;'>El favor no fue cumplido correctamente.</a>";
+							echo "<br><a style='color:red;'>Responsable: ".$array3['nombre']." ".$array3['apellido'].".</a>";
+						}
+					}
+					else {
+						$fechafavor = date_create($array['fechalimite']);
+						$fechafavor = date_format($fechafavor, "Y-m-d");
+						$fechaactual = date("Y-m-d");
+						if ($fechafavor < $fechaactual)
+							echo "<p style='color:red;'>El favor se ha vencido.</p>";
+					}
+				?>
 				<br>
 				<br>
 			</center>
@@ -265,7 +460,7 @@ while ($array = mysqli_fetch_array($result)){?>
 				<a href="./preguntas.php?id=<?php echo $array['id'].$preguntas; ?>" class="w3-btn w3-round"> Ver Preguntas.</a>
 				<br>
 				<br>
-				<a href="./borrar.php?id=<?php echo $array['id']; ?>" onclick="return confirmar();" class="w3-btn w3-round"> Borrar Favor.</a>
+				<a href="./borrar.php?id=<?php echo $array['id'].$preguntas; ?>" onclick="return confirmar();" class="w3-btn w3-round"> Borrar Favor.</a>
 				<br>
 				<br>
 				<?php } ?>
@@ -285,6 +480,7 @@ else{ ?>
 <?php
 	echo "Aun no se han publicado favores o no existen favores que contengan los filtros ingresados.";
 }
+mysqli_close($link);
 ?>
 				</div>
 			</div>
