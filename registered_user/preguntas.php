@@ -6,6 +6,8 @@
 	<?php
 	/* Verifica estado de la sesion (si expiro). */
 	include_once("../session/verifySession.php");
+	/* Navbar */
+	include_once("navbar.php");
 	?>
 		
 	<!-- -------------------------------------- Importa los CSS ---------------------------------------- -->
@@ -28,11 +30,12 @@
 				<script language= "javascript" src="../js/validarPregunta.js"></script>
 				<center>
 					<br>
-					<form action="./mostrar_favores.php" method="post" enctype="multipart/form-data">
+					<form action="./favores.php" method="post" enctype="multipart/form-data">
 						<input type="hidden" name="titulo" value="<?php if (isset($_GET['tit'])) echo $_GET['tit']; ?>">
 						<input type="hidden" name="categoria" value="<?php if (isset($_GET['cat'])) echo $_GET['cat']; ?>">
 						<input type="hidden" name="localidad" value="<?php if (isset($_GET['loc'])) echo $_GET['loc']; ?>">
 						<input type="hidden" name="orden" value="<?php if (isset($_GET['o'])) echo $_GET['o']; ?>">
+						<input type="hidden" name="owner" value="<?php if (isset($_GET['owner'])) echo $_GET['owner']; ?>">
 						<button class="w3-btn w3-round">Volver</button>
 					</form>
 					<!-- Se muestra un mensaje de error si no hay preguntas en ese favor , si las hay las muestra debajo del h1 de preguntas.-->
@@ -52,6 +55,11 @@
 							<form class="w3-form w3-panel w3-round-large" method="post" onsubmit="return validarPregunta();" action="./preguntar.php" enctype="multipart/form-data" >
 							<textarea class="w3-round" type="text" name="pregunta" id="pregunta" cols="55" rows="5"></textarea>
 							<br><br>
+							<input type="hidden" name="titulo" value="<?php if (isset($_GET['tit'])) echo $_GET['tit']; ?>">
+							<input type="hidden" name="categoria" value="<?php if (isset($_GET['cat'])) echo $_GET['cat']; ?>">
+							<input type="hidden" name="localidad" value="<?php if (isset($_GET['loc'])) echo $_GET['loc']; ?>">
+							<input type="hidden" name="orden" value="<?php if (isset($_GET['o'])) echo $_GET['o']; ?>">
+							<input type="hidden" name="owner" value="<?php if (isset($_GET['owner'])) echo $_GET['owner']; ?>">
 							<p><button class="w3-btn w3-round">Preguntar</button></p>
 							</form>
 						<?php 
