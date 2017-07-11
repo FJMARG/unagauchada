@@ -393,14 +393,15 @@ while ($array = mysqli_fetch_array($result)){?>
 				<?php
 					$result3 = mysqli_query($link,"SELECT calificacion, nombre, apellido FROM calificacion INNER JOIN (SELECT postula.id_usuario, usuario.nombre, usuario.apellido FROM postula INNER JOIN usuario ON (postula.id_usuario = usuario.id) WHERE postula.id_favor = '$array[id]' AND postula.elegido = 1) r ON (r.id_usuario = calificacion.id_usuario_r) WHERE calificacion.id_favor = '$array[id]'");
 					$array3 = mysqli_fetch_array($result3);
+					$result4 = mysqli_query($link,"SELECT postula.id_usuario, usuario.nombre, usuario.apellido FROM postula INNER JOIN usuario ON (postula.id_usuario = usuario.id) WHERE postula.id_favor = '$array[id]'");
+					$array4 = mysqli_fetch_array($result4);
 					if ($array ['activo'] == 0){
 						if ($array3['calificacion'] == 1){
 							echo "<a style='color:green;'>El favor fue cumplido correctamente.</a>";
 							echo "<br><a style='color:green;'>Responsable: ".$array3['nombre']." ".$array3['apellido'].".</a>";
 						}
 						else {
-							echo "<a style='color:red;'>El favor no fue cumplido correctamente.</a>";
-							echo "<br><a style='color:red;'>Responsable: ".$array3['nombre']." ".$array3['apellido'].".</a>";
+							echo "<br><a style='color:Orange;'>Aun no calificaste a ".$array4['nombre']." ".$array4['apellido'].".</a>";
 						}
 					}
 					else {
