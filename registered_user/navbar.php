@@ -11,6 +11,15 @@
 	<a href="ver_postulantes.php" class="w3-bar-item w3-light-orange w3-button">Ver Postulantes</a>
 	<a href="calificar_favores.php" class="w3-bar-item w3-light-orange w3-button">Calificar Favores</a>
 	<a href="mis_calificaciones.php" class="w3-bar-item w3-light-orange w3-button">Ver mis calificaciones</a>
+	<?php
+		if ($_SESSION['admin']=== "1"){	?>
+			<a href="privilegios.php" class="w3-bar-item w3-light-orange w3-button">Cambiar privilegios</a>
+			<a href="categoria_form.php" class="w3-bar-item w3-light-orange w3-button">Crear categoria</a>
+			<a href="eliminar_categoria_form.php" class="w3-bar-item w3-light-orange w3-button">Eliminar categoria</a>
+			<a href="ranking.php" class="w3-bar-item w3-light-orange w3-button">Ver ranking de usuarios</a>
+			<a href="reporte_form.php" class="w3-bar-item w3-light-orange w3-button">Ver reporte de ganancias</a>
+			<?php
+		}	?>
 	<a href="../session/logout.php" class="w3-bar-item w3-light-orange w3-button">Cerrar Sesi&oacute;n</a>
 </div>
 <div class="w3-main" id="main">

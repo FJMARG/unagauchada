@@ -6,6 +6,7 @@ class Autenticacion {
 	var $dbemail;
 	var $dbcontraseña;
 	var $dbid;
+	var $dbadmin;
 
 	function consultadatos (){
 		include_once ('../db/connect.php');
@@ -16,6 +17,7 @@ class Autenticacion {
 		$this->dbemail = $datos ['email'];
 		$this->dbcontraseña = $datos ['password'];
 		$this->dbid = $datos['id'];
+		$this->dbadmin = $datos['admin'];
 	}
 	
 	function check (){	/* Metodo comparacion de datos */
@@ -34,6 +36,7 @@ class Autenticacion {
 		$_SESSION['timesegs']= date("s");
 		$_SESSION['email']= $this->email;
 		$_SESSION['id']= $this->dbid;
+		$_SESSION['admin']= $this->dbadmin;
 		return 'ok';
 	}
 
