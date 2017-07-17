@@ -461,6 +461,14 @@ while ($array = mysqli_fetch_array($result)){?>
 				<a href="./preguntas.php?id=<?php echo $array['id'].$preguntas; ?>" class="w3-btn w3-round"> Ver Preguntas.</a>
 				<br>
 				<br>
+				<?php 
+					$resultado2 = mysqli_query($link1 ,"SELECT * FROM postula Where (postula.id_favor= '$array[id]')");
+					if(mysqli_num_rows($resultado2)== 0){
+				?>
+				<a href="./modificar_favor.php?id=<?php echo $array['id'].$preguntas; ?>" class="w3-btn w3-round"> Modificar.</a>
+				<br>
+				<br>
+				<?php }?>
 				<a href="./borrar.php?id=<?php echo $array['id'].$preguntas; ?>" onclick="return confirmar();" class="w3-btn w3-round"> Borrar Favor.</a>
 				<br>
 				<br>
