@@ -451,7 +451,6 @@ while ($array = mysqli_fetch_array($result)){?>
 				<!-- BOTON PARA POSTULARSE -->
 				<?php
 					$resultado = mysqli_query($link1 ,"SELECT * FROM postula Where (postula.id_usuario = '$_SESSION[id]')AND (postula.id_favor = '$array[id]')");
-					mysqli_close($link1);
 					if (mysqli_num_rows($resultado)==0){ ?>
 						<a href="./postularse.php?id=<?php echo $array['id'].$preguntas; ?>" class="w3-btn w3-round"> Postularse.</a>
 						<br>
