@@ -14,8 +14,7 @@
 	<?php
 		if ($_SESSION['admin']=== "1"){	?>
 			<a href="privilegios.php" class="w3-bar-item w3-light-orange w3-button">Cambiar privilegios</a>
-			<a href="categoria_form.php" class="w3-bar-item w3-light-orange w3-button">Crear categoria</a>
-			<a href="eliminar_categoria_form.php" class="w3-bar-item w3-light-orange w3-button">Eliminar categoria</a>
+			<a href="categoria_form.php" class="w3-bar-item w3-light-orange w3-button">Administrar categorias</a>
 			<a href="ranking.php" class="w3-bar-item w3-light-orange w3-button">Ver ranking de usuarios</a>
 			<a href="reporte_form.php" class="w3-bar-item w3-light-orange w3-button">Ver reporte de ganancias</a>
 			<?php

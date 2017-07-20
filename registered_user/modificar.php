@@ -24,9 +24,11 @@
 		else {
 			if(($array['nombre'] != $nombre) or ($array['apellido'] != $apellido) or ($array['email'] != $email) or ($array['tel'] != $telefono)){
 				mysqli_query($link, "UPDATE usuario SET usuario.nombre='$_POST[nombre]', usuario.apellido = '$_POST[apellido]', usuario.tel = '$_POST[telefono]', usuario.email = '$_POST[email]' WHERE usuario.id = '$_SESSION[id]'");
+				mysqli_close($link);
 				header("location: ./modificar_perfil.php?correcto=1");
 			}
 			else{
+				mysqli_close($link);
 				header("location: ./modificar_perfil.php?correcto=0");
 			}
 		}

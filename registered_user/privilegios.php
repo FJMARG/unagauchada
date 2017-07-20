@@ -22,8 +22,12 @@
 				<div style="margin-right:350px">
 						<center>
 						<?php
-						if (isset($_GET['ok'])&& isset($_GET['cant'])){
+						if (isset($_GET['ok'])&& isset($_GET['cant']) && ($_GET['cant'] > 1)){
 							echo "<p style='color:green;'>Se han actualizado ".$_GET['cant']." personas con cambio de privilegios.</p>";
+						}else if(isset($_GET['ok'])&& isset($_GET['cant']) && ($_GET['cant'] == 1)){
+							echo "<p style='color:green;'>Se ha actualizado el cambio de privilegio.</p>";
+						}else if(isset($_GET['ok'])&& isset($_GET['cant']) && ($_GET['cant'] == 0)){
+							echo "<p style='color:orange;'>No se han realizado cambios.</p>";							
 						}
 						?>
 						<form action="cambiar_privilegios.php" class="w3-form w3-panel w3-border w3-border-orange w3-round-large" method="post">
@@ -32,13 +36,20 @@
 							$link = conectar();
 							$result = mysqli_query ($link, "SELECT * FROM usuario");
 							while ($array = mysqli_fetch_array($result)){
-								echo "<p><a> Nombre: ".$array['nombre'].". </a><a>Apellido: ".$array['apellido'].". </a><a>E-mail: ".$array['email'].".</a><a> Es admin: ".$array['admin'].".</a>";
+								if($array['admin'] == 1){
+									$boolean = "Si";
+								}else{
+									$boolean ="No";
+								}
+								if($array['id'] != $_SESSION['id']){
+								echo "<p><a> Nombre: ".$array['nombre'].". </a><br><a>Apellido: ".$array['apellido'].". </a><br><a>E-mail: ".$array['email'].".</a><br><a> Es admin: ".$boolean.".</a>";
 								?>
+
 								<input type="checkbox" name="idusuario[]" value="<?php echo $array["id"]."-".$array["admin"]; ?>"></p>
+								<hr style="background-color: orange; width: 100%; height: 1px;margin:1%;">
 								<?php
-							}
+							}}
 						?>
-						<hr style="background-color: orange; width: 100%; height: 1px;margin:1%;">
 						<button class="w3-btn w3-round">Aceptar.</button>
 						</form>
 						</center>
@@ -47,7 +58,7 @@
 			</div>
 		</div>	
 	</div>
-	<div id="footer" class="w3-light-orange" style="bottom: 0; width: 100%; height: 10%;">
+	<div id="footer" class="w3-light-orange" style="position: fixed; bottom: 0; width: 100%; height: 10%;">
 		<br>
 		<center><font size="3">GSoft Web Designer &copy;</font><center>
 		<br>
