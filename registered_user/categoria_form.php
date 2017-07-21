@@ -18,6 +18,8 @@
 </head>
 <!-- Main -->
 <body>
+		<script language= "javascript" src="../js/jquery-3.2.1.js"></script>
+		<script language="javascript" src="../js/validarCategorias.js"></script>
 		<div class="w3-main" style="margin-left:350px">
 			<div style="margin-right:350px">
 				<div class="w3-row w3-padding-64">
@@ -34,13 +36,13 @@
 						?>
 						<div class="w3-panel w3-border w3-border-orange w3-round-large">
 						<center><h3 class="w3-theme-black">Agregar categoria</h3>
-						<form class="w3-form w3-panel" method="post" action="agregar_categoria.php">
+						<form class="w3-form w3-panel" method="post" action="agregar_categoria.php" onSubmit="validarAgregar(event);">
 							<p>Nombre de categoria: <input type="text" class="w3-round" id="categoria1" name="categoria1"></p>
 							<button class="w3-btn w3-round">Agregar</button>
 						</form>
 						<br>
 						<center><h3 class="w3-theme-black">Eliminar categoria</h3>
-						<form class="w3-form w3-panel" method="post" action="eliminar_categoria.php">
+						<form class="w3-form w3-panel" method="post" action="eliminar_categoria.php" onSubmit="validarEliminar(event);">
 							<p>Seleccionar: 
 							<select class="w3-round" name="categoria2" id="categoria2">
 								<?php

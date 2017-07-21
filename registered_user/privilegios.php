@@ -16,6 +16,8 @@
 	
 </head>
 <body>
+	<script language= "javascript" src="../js/jquery-3.2.1.js"></script>
+	<script language="javascript" src="../js/validarPrivilegios.js"></script>
 	<div class="w3-main">
 		<div class="w3-padding-64">
 			<div class="w3-container" style="margin-left:350px">
@@ -30,7 +32,7 @@
 							echo "<p style='color:orange;'>No se han realizado cambios.</p>";							
 						}
 						?>
-						<form action="cambiar_privilegios.php" class="w3-form w3-panel w3-border w3-border-orange w3-round-large" method="post">
+						<form action="cambiar_privilegios.php" class="w3-form w3-panel w3-border w3-border-orange w3-round-large" method="post" onSubmit="validar(event);">
 						<?php
 							include_once ('../db/connect.php');
 							$link = conectar();
