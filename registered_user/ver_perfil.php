@@ -37,8 +37,10 @@
 						<p><h3><strong>Nombre: </strong><i><?php echo $datos['nombre']." ".$datos['apellido']; ?></i></h3></p>
 						<p><h3><strong>Email: </strong><i><?php echo $datos['email']; ?></i></h3></p>
 						<p><h3><strong>Fecha De Nacimiento: </strong><i><?php echo $datos['fecnac']; ?></i></h3></p>
+						<?php if($datos['id'] == $_SESSION['id']){?>
 						<p><h3><strong>Telefono: </strong><i><?php echo $datos['tel']; ?></i></h3></p>
 						<p><h3><strong>Creditos: </strong><i><?php echo $datos2['cantidad']; ?></i></h3></p>
+						<?php }?>
 						<p><h3><strong>Puntos: </strong><i>
 						<?php
 							echo $datos['puntaje'];
