@@ -5,18 +5,19 @@
 	<?php
 		include ("./sidebar-data.php");
 	?>
-	<a href="ver_perfil.php?id=<?php echo $_SESSION['id']?>" class="w3-bar-item w3-light-orange w3-button">Ver Mi Perfil</a>
-	<a href="favores.php?owner=yes" class="w3-bar-item w3-light-orange w3-button">Ver Mis Favores</a>
+	<a href="ver_perfil.php?id=<?php echo $_SESSION['id']?>" class="w3-bar-item w3-light-orange w3-button">Mi Perfil</a>
+	<a href="favores.php?owner=yes" class="w3-bar-item w3-light-orange w3-button">Mis Favores</a>
 	<a href="modificar_perfil.php" class="w3-bar-item w3-light-orange w3-button">Modificar Perfil</a>
 	<a href="ver_postulantes.php" class="w3-bar-item w3-light-orange w3-button">Ver Postulantes</a>
 	<a href="calificar_favores.php" class="w3-bar-item w3-light-orange w3-button">Calificar Favores</a>
-	<a href="mis_calificaciones.php" class="w3-bar-item w3-light-orange w3-button">Ver mis calificaciones</a>
+	<a href="ver_mis_postulaciones.php" class="w3-bar-item w3-light-orange w3-button">Mis postulaciones</a>
+	<a href="mis_calificaciones.php" class="w3-bar-item w3-light-orange w3-button">Mis calificaciones</a>
 	<?php
 		if ($_SESSION['admin']=== "1"){	?>
 			<a href="privilegios.php" class="w3-bar-item w3-light-orange w3-button">Cambiar privilegios</a>
 			<a href="categoria_form.php" class="w3-bar-item w3-light-orange w3-button">Administrar categorias</a>
-			<a href="ranking.php" class="w3-bar-item w3-light-orange w3-button">Ver ranking de usuarios</a>
-			<a href="reporte_form.php" class="w3-bar-item w3-light-orange w3-button">Ver reporte de ganancias</a>
+			<a href="ranking.php" class="w3-bar-item w3-light-orange w3-button">Ranking de usuarios</a>
+			<a href="reporte_form.php" class="w3-bar-item w3-light-orange w3-button">Reporte de ganancias</a>
 			<?php
 		}	?>
 	<a href="../session/logout.php" class="w3-bar-item w3-light-orange w3-button">Cerrar Sesi&oacute;n</a>

@@ -32,10 +32,13 @@
 									$resultado = mysqli_query($link,"SELECT * FROM usuario Where usuario.id = '$_SESSION[id]'");
 									$array = mysqli_fetch_array($resultado);
 									if (isset ($_GET['correcto']) and ($_GET['correcto'] == 1)){
-										echo "<font color='green'><center> Cambios realizados </center></font>";
+										echo "<font color='green'><center> Cambios realizados. </center></font>";
 									}
 									elseif (isset ($_GET['correcto']) and ($_GET['correcto'] == 0)) {
-										echo "<font color='red'><center> No cambiaste ningun campo </center></font>";
+										echo "<font color='red'><center> No cambiaste ningun campo. </center></font>";
+									}
+									elseif (isset ($_GET['correcto']) and ($_GET['correcto'] == 2)) {
+										echo "<font color='red'><center> Ese email ya esta en uso. </center></font>";
 									}
 								?>
 								<br>

@@ -50,7 +50,7 @@
 							}
 						}
 						/*En este if se pregunta si el usuario de la sesion iniciada es el propio dueño del favor, en caso de no serlo puede realizar una pregunta.*/
-						if($favor['id_usuario'] != $_SESSION['id']){ ?>
+						if(($favor['id_usuario'] != $_SESSION['id']) and $favor['activo'] == 1){ ?>
 							<h3> Realizar Pregunta: <h3>
 							<form class="w3-form w3-panel w3-round-large" method="post" onsubmit="return validarPregunta();" action="./preguntar.php" enctype="multipart/form-data" >
 							<textarea class="w3-round" type="text" name="pregunta" id="pregunta" cols="55" rows="5"></textarea>
