@@ -40,7 +40,9 @@
 							<p>Nombre de categoria: <input type="text" class="w3-round" id="categoria1" name="categoria1"></p>
 							<button class="w3-btn w3-round">Agregar</button>
 						</form>
+						</div>
 						<br>
+						<div class="w3-panel w3-border w3-border-orange w3-round-large">
 						<center><h3 class="w3-theme-black">Eliminar categoria</h3>
 						<form class="w3-form w3-panel" method="post" action="eliminar_categoria.php" onSubmit="validarEliminar(event);">
 							<p>Seleccionar: 
