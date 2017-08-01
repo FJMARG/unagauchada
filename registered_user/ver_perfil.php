@@ -28,7 +28,6 @@
 							$datos = mysqli_fetch_array($user);
 							$creditos= mysqli_query ($link, "SELECT * FROM credito WHERE credito.id_usuario = '$_GET[id]'");
 							$datos2= mysqli_fetch_array($creditos);
-							mysqli_close($link);
 						?>
 						<center>
 						<br><br>
@@ -45,6 +44,7 @@
 						<?php
 							echo $datos['puntaje'];
 							include_once("calcular_rango.php");
+							mysqli_close($link);
 						?>
 						</i></h3></p>
 						</center>
