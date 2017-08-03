@@ -30,13 +30,17 @@ function validarCamposAgregar(e){
 		e.preventDefault();
 		return false;
 	}
-	else if (puntajemax < puntajemin){
-		alert ("El puntaje maximo no debe ser menor al puntaje minimo.");
-		e.preventDefault();
-		return false;
+	else {
+		puntajemin=puntajemin*1;
+		puntajemax=puntajemax*1;
+		if (puntajemax < puntajemin){
+			alert ("El puntaje maximo no debe ser menor al puntaje minimo.");
+			e.preventDefault();
+			return false;
+		}
+		else
+			return true;
 	}
-	else
-		return true;
 }
 
 function validarCamposModificar(e){
@@ -55,17 +59,24 @@ function validarCamposModificar(e){
 		e.preventDefault();
 		return false;
 	}
-	else if (puntajemax < puntajemin){
-		alert ("El puntaje maximo no debe ser menor al puntaje minimo.");
-		e.preventDefault();
-		return false;
+	else {
+		puntajemin=puntajemin*1;
+		puntajemax=puntajemax*1;
+		if (puntajemax < puntajemin){
+			alert ("El puntaje maximo no debe ser menor al puntaje minimo.");
+			e.preventDefault();
+			return false;
+		}
+		else
+			return true;
 	}
-	else
-		return true;
 }
 
 function validarCamposEliminar(e){
 	if (!confirm ("¿Estas seguro que deseas eliminar esta reputacion?")){
 		e.preventDefault();
+		return false;
 	}
+	else
+		return true;
 }

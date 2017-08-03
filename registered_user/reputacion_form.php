@@ -29,7 +29,7 @@
 							<?php
 									include_once ("../db/connect.php");
 									$link = conectar();
-									$resultado = mysqli_query ($link, "SELECT * FROM reputacion");
+									$resultado = mysqli_query ($link, "SELECT * FROM reputacion ORDER BY puntajemin");
 									echo "<div style='overflow:auto;height:300px;'><table style='border: 1px solid orange;border-spacing: 5px;'>";
 									echo "<tr><th>Nombre</th><th>Puntaje Minimo</th><th>Puntaje Maximo</th></tr>";
 									while ($vector = mysqli_fetch_array($resultado)){ 
@@ -67,7 +67,7 @@
 								<?php
 									include_once ("../db/connect.php");
 									$link = conectar();
-									$result = mysqli_query ($link, "SELECT * FROM reputacion WHERE nombre != 'Irresponsable' AND nombre != 'Observador'");
+									$result = mysqli_query ($link, "SELECT * FROM reputacion WHERE nombre != 'Irresponsable' AND nombre != 'Observador' ORDER BY puntajemin");
 									while ($row = mysqli_fetch_array($result)){ 
 									?>
 										<option value="<?php echo $row["id"]."-".$row["nombre"]."-".$row["puntajemin"]."-".$row["puntajemax"]; ?>"><?php echo $row['nombre']." (".$row['puntajemin']." - ".$row['puntajemax'].")"; ?></option>
@@ -88,13 +88,13 @@
 						<br>
 						<div class="w3-panel w3-border w3-border-orange w3-round-large">
 						<center><h3 class="w3-theme-black">Eliminar Reputación</h3>
-						<form id="eliminarReputacion" class="w3-form w3-panel" method="post" action="eliminar_reputacion.php" onSubmit="validarCamposEliminar(event)">
+						<form id="eliminarReputacion" class="w3-form w3-panel" method="post" action="eliminar_reputacion.php">
 							<p>Seleccionar: 
-							<select class="w3-round" name="idreputacion" id="idreputacion">
+							<select class="w3-round" name="idreputacion2" id="idreputacion2">
 								<?php
 									include_once ("../db/connect.php");
 									$link = conectar();
-									$result = mysqli_query ($link, "SELECT * FROM reputacion WHERE nombre != 'Irresponsable' AND nombre != 'Observador'");
+									$result = mysqli_query ($link, "SELECT * FROM reputacion WHERE nombre != 'Irresponsable' AND nombre != 'Observador' ORDER BY puntajemin");
 									while ($row = mysqli_fetch_array($result)){ 
 									?>
 										<option value="<?php echo $row["id"]; ?>"><?php echo $row['nombre']." (".$row['puntajemin']." - ".$row['puntajemax'].")"; ?></option>
