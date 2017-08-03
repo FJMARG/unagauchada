@@ -382,7 +382,10 @@ if (isset ($_GET['ok'])){
 
 $index = 0;
 if (mysqli_num_rows($result)!=0){
-while ($array = mysqli_fetch_array($result)){?>
+while ($array = mysqli_fetch_array($result)){
+	$fechafavor = date_create($array['fechalimite']); /* Fechas para ver si caduco favor por tiempo, para informarlo y mostrar o no boton borrar. */
+	$fechafavor = date_format($fechafavor, "Y-m-d");
+	$fechaactual = date("Y-m-d"); ?>
 	<div class="w3-panel w3-border w3-border-orange w3-round-large">
 		<font size=4 face="arial">
 			<center>
@@ -405,9 +408,6 @@ while ($array = mysqli_fetch_array($result)){?>
 						}
 					}
 					else {
-						$fechafavor = date_create($array['fechalimite']);
-						$fechafavor = date_format($fechafavor, "Y-m-d");
-						$fechaactual = date("Y-m-d");
 						if ($fechafavor < $fechaactual)
 							echo "<p style='color:red;'>El favor se ha vencido.</p>";
 					}
@@ -467,11 +467,14 @@ while ($array = mysqli_fetch_array($result)){?>
 				<a href="./modificar_favor.php?id=<?php echo $array['id'].$preguntas; ?>" class="w3-btn w3-round"> Modificar.</a>
 				<br>
 				<br>
-				<?php }?>
+				<?php }
+				if (($array ['activo'] == 1)&&($fechafavor >= $fechaactual)){?>
 				<a href="./borrar.php?id=<?php echo $array['id'].$preguntas; ?>" onclick="return confirmar();" class="w3-btn w3-round"> Borrar Favor.</a>
 				<br>
 				<br>
-				<?php } ?>
+				<?php
+				}
+				} ?>
 			</div>
 			<center>
 			<a href="#" onclick="verDetalles(<?php echo $index; ?>,event)" class="w3-btn w3-round" id="link<?php echo $index; ?>">Mostrar m&aacute;s.
