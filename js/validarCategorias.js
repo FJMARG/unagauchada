@@ -10,3 +10,10 @@ function validarEliminar(e){
 		e.preventDefault();
 	}
 }
+
+function validarModificar(e){
+	if ($("#categoria4").val().length == 0){
+		alert("No puede haber campos vacios.");
+		e.preventDefault();
+	}
+}

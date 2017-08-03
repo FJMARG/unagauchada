@@ -32,6 +32,10 @@
 								echo "<p style='color:red;'>Esa categoria ya existe.</p>";
 							}else if(isset($_GET['id'])&& ($_GET['id'] == "correcto2")){
 								echo "<p style='color:green;'>Eliminaste la categoria correctamente.</p>";
+							}else if(isset($_GET['id'])&& ($_GET['id'] == "incorrecto2")){
+								echo "<p style='color:red;'>Esa nombre de categoria ya existe.</p>";
+							}else if(isset($_GET['id'])&& ($_GET['id'] == "correcto3")){
+								echo "<p style='color:green;'>Modificaste la categoria correctamente.</p>";
 							}
 						?>
 						<div class="w3-panel w3-border w3-border-orange w3-round-large">
@@ -61,6 +65,29 @@
 								?>		
 							</select></p>
 							<button class="w3-btn w3-round">Eliminar</button>
+						</form>
+						</div>
+						<br>
+						<div class="w3-panel w3-border w3-border-orange w3-round-large">
+						<center><h3 class="w3-theme-black">Modificar categoria</h3>
+						<form class="w3-form w3-panel" method="post" action="modificar_categoria.php" onSubmit="validarModificar(event);">
+							<p>Seleccionar: 
+							<select class="w3-round" name="categoria3" id="categoria3">
+								<?php
+									include_once ("../db/connect.php");
+									$link = conectar();
+									$result = mysqli_query ($link, "SELECT * FROM categoria");
+									while ($row = mysqli_fetch_array($result)){ 
+										if($row['nombre'] != "Otros"){?>
+										<option value="<?php echo $row["nombre"]; ?>"><?php echo $row["nombre"]; ?></option>
+								<?php
+								}}
+									mysqli_free_result($result);
+									mysqli_close($link);
+								?>		
+							</select></p>
+							<p><input id="categoria4" name="categoria4" class="w3-round" type="text" placeholder="Nuevo nombre"></p>
+							<button class="w3-btn w3-round">Modificar</button>
 						</form>
 						</div>
 						</center>
