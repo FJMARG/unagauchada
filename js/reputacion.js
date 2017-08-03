@@ -28,13 +28,15 @@ function validarCamposAgregar(e){
 	if ((nombre === "") || (puntajemin === "") || (puntajemax === "")){
 		alert ("No pueden haber campos vacios.");
 		e.preventDefault();
+		return false;
 	}
-	else {
-		if (puntajemax < puntajemin){
-			alert ("El puntaje maximo no debe ser menor al puntaje minimo.");
-			e.preventDefault();
-		}
+	else if (puntajemax < puntajemin){
+		alert ("El puntaje maximo no debe ser menor al puntaje minimo.");
+		e.preventDefault();
+		return false;
 	}
+	else
+		return true;
 }
 
 function validarCamposModificar(e){
@@ -46,19 +48,20 @@ function validarCamposModificar(e){
 	if (id === ""){
 		alert ("Debe seleccionar una categoria para modificar.");
 		e.preventDefault();
+		return false;
 	}
-	else {
-		if ((nombre === "") || (puntajemin === "") || (puntajemax === "")){
-			alert ("No pueden haber campos vacios.");
-			e.preventDefault();
-		}
-		else {
-			if (puntajemax < puntajemin){
-				alert ("El puntaje maximo no debe ser menor al puntaje minimo.");
-				e.preventDefault();
-			}
-		}
+	else if ((nombre === "") || (puntajemin === "") || (puntajemax === "")){
+		alert ("No pueden haber campos vacios.");
+		e.preventDefault();
+		return false;
 	}
+	else if (puntajemax < puntajemin){
+		alert ("El puntaje maximo no debe ser menor al puntaje minimo.");
+		e.preventDefault();
+		return false;
+	}
+	else
+		return true;
 }
 
 function validarCamposEliminar(e){

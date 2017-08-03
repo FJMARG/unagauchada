@@ -52,7 +52,7 @@
 						?>
 						<div class="w3-panel w3-border w3-border-orange w3-round-large">
 						<center><h3 class="w3-theme-black">Agregar Reputación</h3>
-						<form id="agregarReputacion" class="w3-form w3-panel" method="post" action="agregar_reputacion.php" onSubmit="validarCamposAgregar(event);">
+						<form id="agregarReputacion" class="w3-form w3-panel" method="post" action="agregar_reputacion.php">
 							<p>Nombre de Reputación: <input type="text" class="w3-round" id="nombrereputacion" name="nombrereputacion"></p>
 							<p>Puntaje M&iacute;nimo: <input type="number" class="w3-round" id="puntajemin" name="puntajemin"></p>
 							<p>Puntaje M&aacute;ximo: <input type="number" class="w3-round" id="puntajemax" name="puntajemax"></p>
@@ -77,7 +77,7 @@
 									mysqli_close($link);
 								?>		
 						</select>
-						<form id="modificarReputacion" class="w3-form w3-panel" method="post" action="modificar_reputacion.php" onSubmit="validarCamposModificar(event);">
+						<form id="modificarReputacion" class="w3-form w3-panel" method="post" action="modificar_reputacion.php">
 							<p>Nombre de Reputación: <input type="text" class="w3-round" id="nombrereputacion3" name="nombrereputacion3" value=""></p>
 							<p>Puntaje M&iacute;nimo: <input type="number" class="w3-round" id="puntajemin2" name="puntajemin2" value=""></p>
 							<p>Puntaje M&aacute;ximo: <input type="number" class="w3-round" id="puntajemax2" name="puntajemax2" value=""></p>
