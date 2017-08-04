@@ -39,6 +39,14 @@ $(function(){
 		}).done(function (respuesta){
 			res = respuesta;
 		});
+		if (res === "-1"){
+			alert ("El nombre de reputacion ya esta en uso y, ademas; el rango de puntajes superpone a otro, o ya existe para otra reputacion.");
+			event.preventDefault();
+		}
+		if (res === "0"){
+			alert ("El nombre de reputacion ya esta en uso.");
+			event.preventDefault();
+		}
 		if (res === "1"){
 			alert ("El rango de puntajes superpone a otro, o ya existe para otra reputacion.");
 			event.preventDefault();

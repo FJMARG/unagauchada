@@ -3,11 +3,16 @@ include_once ("../db/connect.php");
 $link = conectar ();
 if (isset($_POST['id'])){
 	if (isset($_POST['nombre']) && isset($_POST['puntajemin']) && isset($_POST['puntajemax'])){
+		$resultx = mysqli_query($link, "SELECT * FROM reputacion WHERE nombre = '$_POST[nombre]' AND id != '$_POST[id]'");
+		$cantx= mysqli_num_rows($resultx);
 		$result = mysqli_query($link, "SELECT * FROM reputacion WHERE puntajemin <= '$_POST[puntajemax]' AND puntajemax >= '$_POST[puntajemin]' AND id != '$_POST[id]'");
 		$cant= mysqli_num_rows($result);
-		if ($cant > 0){
-			echo 1; /* Modificar: puntajes pisan otro rango. */
-		}
+		if (($cant > 0)&&($cantx > 0))
+			echo -1; /* Modificar: Puntajes pisan otro rango y nombre en uso. */
+		else if ($cantx > 0)
+			echo 0; /* Modificar: Nombre en uso. */
+		else if ($cant > 0)
+			echo 1; /* Modificar: Puntajes pisan otro rango. */
 		else {
 			$resultado = mysqli_query($link, "SELECT * FROM reputacion WHERE id = '$_POST[id]'");
 			$row = mysqli_fetch_array($resultado);
