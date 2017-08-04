@@ -30,7 +30,7 @@
 				<script language= "javascript" src="../js/validarPregunta.js"></script>
 				<center>
 					<br>
-					<form action="./favores.php" method="post" enctype="multipart/form-data">
+					<form action="<?php if (isset($_GET['p'])) echo './ver_mis_postulaciones.php'; else echo './favores.php';?>" method="post" enctype="multipart/form-data">
 						<input type="hidden" name="titulo" value="<?php if (isset($_GET['tit'])) echo $_GET['tit']; ?>">
 						<input type="hidden" name="categoria" value="<?php if (isset($_GET['cat'])) echo $_GET['cat']; ?>">
 						<input type="hidden" name="localidad" value="<?php if (isset($_GET['loc'])) echo $_GET['loc']; ?>">
