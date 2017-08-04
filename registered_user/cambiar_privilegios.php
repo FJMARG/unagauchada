@@ -2,7 +2,7 @@
 	include_once("../db/connect.php");
 	$link = conectar();
 	foreach ($_POST['idusuario'] as $usuario){
-		$id = split("-",$usuario);
+		$id = explode("-",$usuario);
 		if ($id[1]==="1")
 			$sql = "UPDATE usuario SET admin = '0' WHERE id = '$id[0]'";
 		else

@@ -20,10 +20,10 @@ if(isset($_POST['tarjeta']) && !empty($_POST['tarjeta']) && isset($_POST['cantid
 			$exito=2;
 		}
 		if (mysqli_query($link, "UPDATE credito SET credito.cantidad=credito.cantidad+'$cantidad * $result[cantidad]' WHERE credito.id_usuario='$_SESSION[id]'")){
-			mysqli_query ($link, "INSERT INTO compracredito (id_tienda,id_usuario,cantidad,precio,fecha) VALUES ('$_POST[pack]','$_SESSION[id]','$cantidad' * '$result[cantidad]','$result[precio]',CURDATE())");
+			$precio=$cantidad*$result[precio];
+			mysqli_query ($link, "INSERT INTO compracredito (id_tienda,id_usuario,cantidad,precio,fecha) VALUES ('$_POST[pack]','$_SESSION[id]','$cantidad' * '$result[cantidad]',$precio,CURDATE())");
 			mysqli_close($link);
 			if ($exito == 3){
-				$precio=$cantidad*$result[precio];
 				header("location: ./comprar.php?error=".$exito."&cant=".$cantidad."&prec=".$precio);
 			}
 			else{
