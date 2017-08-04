@@ -18,11 +18,17 @@ if (isset($_POST['id'])){
 			$result3 = mysqli_query($link, "SELECT * FROM reputacion WHERE puntajemin = $puntajemax AND id != '$_POST[id]'");
 			$cant3 = mysqli_num_rows($result3);
 			if (($cant2 > 0) && ($cant3 > 0) && ($_POST['puntajemin'] != $row['puntajemin']) && ($_POST['puntajemax'] != $row['puntajemax']))
-				echo 2; /* Queda un espacio adelante y atras del rango. */
+				echo 2; /* Modificar: Queda un espacio adelante y atras del rango. */
 			else if (($cant2 > 0) && ($_POST['puntajemin'] != $row['puntajemin']))
-				echo 3; /* Queda un espacio atras del rango. */
+				echo 3; /* Modificar: Queda un espacio atras del rango. */
 			else if (($cant3 > 0) && ($_POST['puntajemax'] != $row['puntajemax']))
-				echo 4; /* Queda un espacio adelante del rango. */
+				echo 4; /* Modificar: Queda un espacio adelante del rango. */
+			else {
+				$resultado = mysqli_query($link, "SELECT * FROM reputacion WHERE nombre = '$_POST[nombre]' AND puntajemin = '$_POST[puntajemin]' AND puntajemax = '$_POST[puntajemax]'");
+				$cant = mysqli_num_rows($resultado);
+				if ($cant == 1)
+					echo 5; /* Modificar: No se esta realizando ningun cambio. */
+			}
 		}
 	}
 	else{
@@ -37,23 +43,27 @@ if (isset($_POST['id'])){
 	}
 }
 else {
-	$result = mysqli_query($link, "SELECT id FROM reputacion WHERE nombre = '$_POST[nombre]'");
-	$cant= mysqli_num_rows($result);
-	if ($cant > 0){
-		echo 1; /* Agregar: nombre de reputacion ya existe. */
-	}
-	else {
-		$result = mysqli_query($link, "SELECT * FROM reputacion WHERE puntajemin <= '$_POST[puntajemax]' AND puntajemax >= '$_POST[puntajemin]'");
+	$result = mysqli_query($link, "SELECT * FROM reputacion");
+	$cant = mysqli_num_rows($result);
+	if ($cant != 0){
+		$result = mysqli_query($link, "SELECT id FROM reputacion WHERE nombre = '$_POST[nombre]'");
 		$cant= mysqli_num_rows($result);
 		if ($cant > 0){
-			echo 2; /* Agregar: puntajes pisan otro rango. */
+			echo 1; /* Agregar: nombre de reputacion ya existe. */
 		}
 		else {
-			$puntajemin = $_POST["puntajemin"]-1;
-			$result2 = mysqli_query($link, "SELECT * FROM reputacion WHERE puntajemax = $puntajemin");
-			$cant2 = mysqli_num_rows($result2);
-			if ($cant2 == 0){
-				echo 3; /* Agregar: no pueden quedar espacios vacios. */
+			$result = mysqli_query($link, "SELECT * FROM reputacion WHERE puntajemin <= '$_POST[puntajemax]' AND puntajemax >= '$_POST[puntajemin]'");
+			$cant= mysqli_num_rows($result);
+			if ($cant > 0){
+				echo 2; /* Agregar: puntajes pisan otro rango. */
+			}
+			else {
+				$puntajemin = $_POST["puntajemin"]-1;
+				$result2 = mysqli_query($link, "SELECT * FROM reputacion WHERE puntajemax = $puntajemin");
+				$cant2 = mysqli_num_rows($result2);
+				if ($cant2 == 0){
+					echo 3; /* Agregar: no pueden quedar espacios vacios. */
+				}
 			}
 		}
 	}

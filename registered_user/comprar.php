@@ -64,7 +64,7 @@
 	</div>
 </div>
 </center>
-	<div id="footer" class="w3-grey" style="position: fixed; bottom: 0; width: 100%; height: 10%;">
+	<div id="footer" class="w3-light-orange" style="position: fixed; bottom: 0; width: 100%; height: 10%;">
 		<br>
 		<center><font size="3">GSoft Web Designer &copy;</font><center>
 		<br>

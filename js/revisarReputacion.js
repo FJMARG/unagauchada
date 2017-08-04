@@ -55,6 +55,10 @@ $(function(){
 			alert ("No puede quedar un espacio adelante del rango.");
 			event.preventDefault();
 		}
+		if (res === "5"){
+			alert ("No se esta produciendo ningun cambio en los valores originales de la reputacion.");
+			event.preventDefault();
+		}
 	}
 	});
 	$("#eliminarReputacion").submit(function(event){
